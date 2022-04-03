@@ -17,8 +17,8 @@ public class AvailibleFood {
         for(int i =0; i < dataTable.length;i++){
             //grabs fields for this specific item, then appends an item
             //to the end of the list.
-            String name = dataTable[i][0];
-            String itemID = dataTable[i][1];
+            String name = dataTable[i][1];
+            String itemID = dataTable[i][0];
             int grain = Integer.parseInt(dataTable[i][2]);
             int fruit = Integer.parseInt(dataTable[i][3]);
             int protein = Integer.parseInt(dataTable[i][4]);

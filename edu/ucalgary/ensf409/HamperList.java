@@ -1,3 +1,8 @@
+/**
+author: Carlos Morera Pinilla
+version: 1.3
+since: 1.0
+*/
 package edu.ucalgary.ensf409;
 import java.util.*;
 

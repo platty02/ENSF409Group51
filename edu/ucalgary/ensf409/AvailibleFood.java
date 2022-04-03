@@ -1,6 +1,6 @@
 //ENSF409 FINAL PROJECT GROUP 51
 //AvailableFood.java
-//version: 1.0
+//version: 1.2
 //from: 1.0
 package edu.ucalgary.ensf409;
 import java.util.*;
@@ -10,7 +10,8 @@ import java.util.*;
 public class AvailibleFood {
     private ArrayList<Item> foodInventory = null;
     //constructor.
-    public AvailibleFood(String[][] dataTable){
+    public AvailibleFood(String[][] dataTable) throws IllegalArgumentException{
+        boolean valid = true;
         foodInventory = new ArrayList<Item>();
         //walk through the given data table, adding items
         //for each inidivdual String array.
@@ -24,13 +25,28 @@ public class AvailibleFood {
             int protein = Integer.parseInt(dataTable[i][4]);
             int other = Integer.parseInt(dataTable[i][5]);
             int calories = Integer.parseInt(dataTable[i][6]);
-            foodInventory.add(new Item(name,itemID,grain,fruit,protein,other,calories));
+            //check if name, id and all other caloric values are valid.
+            if(dataTable[i] == null || name == null|| itemID == null){
+                valid = false;
+            }
+            else if(grain < 0 || fruit < 0 || protein < 0 || other < 0 || calories < 0 ){
+                valid = false;
+            }
+            //if the values from the table are valid, then add a new item to the list. else,
+            //throw error.
+            if(valid == true)
+                foodInventory.add(new Item(name,itemID,grain,fruit,protein,other,calories));
+            else
+                throw new IllegalArgumentException();
         }
     }
 
     //add an item to the array list.
-    public void addItem(Item food){
-        this.foodInventory.add(food);
+    public void addItem(Item food) throws IllegalArgumentException{
+        if(food != null)    
+            this.foodInventory.add(food);
+        else 
+            throw new IllegalArgumentException();
     }
 
     //remove an item from the array list and return it.
@@ -46,6 +62,8 @@ public class AvailibleFood {
                 break;
             }
         }
+        if(toReturn == null)
+            throw new IllegalArgumentException();
         return toReturn;
     }
 

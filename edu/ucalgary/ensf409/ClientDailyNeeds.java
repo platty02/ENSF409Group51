@@ -16,8 +16,12 @@ public class ClientDailyNeeds
 	private final int CALORIES;
 	
 	//Constructor:
-	public ClientDailyNeeds(int grain, int fruitVeg, int protein, int other, int calories)
+	public ClientDailyNeeds(int grain, int fruitVeg, int protein, int other, int calories) throws IllegalArgumentException
 	{
+		if(grain < 0 || fruitVeg < 0 || protein < 0 || other < 0 || calories < 0)
+		{
+			throw new IllegalArgumentException("ClientDailyNeeds Constructor recieved a negative value for one of it's arguments!");
+		}
 		this.WHOLEGRAINS = grain;
 		this.FRUITVEGGIES = fruitVeg;
 		this.PROTEIN = protein;

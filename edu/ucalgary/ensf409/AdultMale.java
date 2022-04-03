@@ -9,8 +9,7 @@ public class AdultMale
 {
 	//Private fields:
 	private final int CLIENT_ID = 1;
-	//NOTE: We shud talk about making a connection to the DataStorage Class to either each client.
-	//Or the ClientDailyNeeds class.
+	
 	//Constructor:
 	public AdultMale(String[][] dailyNeeds)
 	{

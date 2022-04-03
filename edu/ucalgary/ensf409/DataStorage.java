@@ -3,8 +3,7 @@
 /**
 @author Kolby Lalonde 
 UCID: 30115568
-Tutorial Section: T06
-@version 1.0 March, 29, 2022
+@version 1.1 April, 3, 2022
 @since 1.0 March, 29, 2022
 **/
 
@@ -26,7 +25,7 @@ public class DataStorage {
     private Connection dbConnect;
     private ResultSet results;
 
-    private String [][] dailyClientNeedsTable = new String [4][6]; // 4 row by 6 columns
+    private String [][] dailyClientNeedsTable = new String [4][7]; // 4 row by 6 columns
     private String [][] avaliableFoodTable;
     
     public DataStorage(String url){
@@ -38,7 +37,6 @@ public class DataStorage {
         this.USERNAME = "student";
         this.PASSWORD = "ensf";
     }
-
 
     //Method to create a connection to the database, no arguments, no return value  
     public void initializeConnection(){
@@ -75,13 +73,14 @@ public class DataStorage {
             results = myStmt.executeQuery(query);
 
             int i = 0;
-            while (results.next()){       
-                this.dailyClientNeedsTable[i][0] = results.getString("Client");
-                this.dailyClientNeedsTable[i][1] = results.getString("WholeGrains");
-                this.dailyClientNeedsTable[i][2] = results.getString("FruitVeggies");
-                this.dailyClientNeedsTable[i][3] = results.getString("Protein");
-                this.dailyClientNeedsTable[i][4] = results.getString("Other");
-                this.dailyClientNeedsTable[i][5] = results.getString("Calories");
+            while (results.next()){  
+                this.dailyClientNeedsTable[i][0] = results.getString("ClientID");     
+                this.dailyClientNeedsTable[i][1] = results.getString("Client");
+                this.dailyClientNeedsTable[i][2] = results.getString("WholeGrains");
+                this.dailyClientNeedsTable[i][3] = results.getString("FruitVeggies");
+                this.dailyClientNeedsTable[i][4] = results.getString("Protein");
+                this.dailyClientNeedsTable[i][5] = results.getString("Other");
+                this.dailyClientNeedsTable[i][6] = results.getString("Calories");
                 i++;
             }
         } 
@@ -120,7 +119,7 @@ public class DataStorage {
     public void setAvaliableFoodTable(String tableName, int total){     
 
         StringBuffer needs = new StringBuffer();
-        this.avaliableFoodTable = new String [total][6];
+        this.avaliableFoodTable = new String [total][7];
 
         try{
             String query = "SELECT * FROM " + tableName;
@@ -128,13 +127,14 @@ public class DataStorage {
             results = myStmt.executeQuery(query);
 
             int i = 0;
-            while (results.next()){       
-                this.avaliableFoodTable[i][0] = results.getString("Name");
-                this.avaliableFoodTable[i][1] = results.getString("GrainContent");
-                this.avaliableFoodTable[i][2] = results.getString("FVContent");
-                this.avaliableFoodTable[i][3] = results.getString("ProContent");
-                this.avaliableFoodTable[i][4] = results.getString("Other");
-                this.avaliableFoodTable[i][5] = results.getString("Calories");
+            while (results.next()){ 
+                this.avaliableFoodTable[i][0] = results.getString("ItemID");      
+                this.avaliableFoodTable[i][1] = results.getString("Name");
+                this.avaliableFoodTable[i][2] = results.getString("GrainContent");
+                this.avaliableFoodTable[i][3] = results.getString("FVContent");
+                this.avaliableFoodTable[i][4] = results.getString("ProContent");
+                this.avaliableFoodTable[i][5] = results.getString("Other");
+                this.avaliableFoodTable[i][6] = results.getString("Calories");
                 i++;
             }
         } 

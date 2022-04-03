@@ -1,25 +1,26 @@
 //ENSF409 FINAL PROJECT GROUP 51
 //Item.java
-//version: 1.0
-//from: 1.0
+//version: 1.1
+//from: 1.0 
+
 package edu.ucalgary.ensf409;
 
 //Item objects are used to store information
 //about each food item in the data base.
 public class Item {
     //class variables.
-    private String itemID = null;
-    private String name = null;
-    private int grainContent = 0;
-    private int fruitVegContent = 0;
-    private int proteinContent = 0;
-    private int other = 0;
-    private int calories = 0;
+    private final String itemID;
+    private final String name;
+    private final int grainContent;
+    private final int fruitVegContent;
+    private final int proteinContent;
+    private final int other;
+    private final int calories;
     
     //constructor.
     //Constructor was changed to include itemID and name as variables,
     //this will need to be relflected in the uml. 2022-03-25
-    public Item(int grain, int fruitVeg, int protein, int other, int calories, String itemID, String name){
+    public Item(String name, String itemID, int grain, int fruitVeg, int protein, int other, int calories){
         //set private variables.
         this.itemID = new String(itemID);
         this.name = new String(name);
@@ -54,29 +55,12 @@ public class Item {
     public int getCalories(){
         return this.calories;
     }
-
-    //grainContent setter
-    public void setGrainContent(int grainContent){
-        this.grainContent = grainContent;
+    //itemID getter.
+    public String getID(){
+        return this.itemID;
     }
-
-    //fruitVegContent setter
-    public void setFruitVegContent(int fruitVegContent){
-        this.fruitVegContent = fruitVegContent;
-    }
-
-    //protein content setter
-    public void setProteinContent(int proteinContent){
-        this.proteinContent = proteinContent;
-    }
-
-    //other setter
-    public void setOther(int other){
-        this.other = other;
-    }
-
-    //setter for calories.
-    public void setCalories(int calories){
-        this.calories = calories;
+    //Item name getter.
+    public String getName(){
+        return this.name;
     }
 }

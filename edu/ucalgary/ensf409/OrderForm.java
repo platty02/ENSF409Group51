@@ -12,10 +12,17 @@ public class OrderForm
 	{
 		this.REPORT = reportInfo;
 	}
+	//Retrives a formatted String of the Order Form taken from the collection of Hampers in HamperList.
 	public String getFormattedForm()
 	{
 		try
 		{
+			this.bw = new BufferedWriter(new FileWriter("orderForm.txt"));
+			this.bw.write("JJCK Food Bank.......\n");
+			this.bw.write("Hamper Order Form\n\n");
+			this.bw.write("Name: \n");
+			this.bw.write("Date: \n\n");
+			this.bw.write("Original Request: \n");
 			
 		}
 		catch(IOException e)

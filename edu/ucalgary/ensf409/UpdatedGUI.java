@@ -62,7 +62,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         cOInput.addMouseListener(this);
         cUInput.addMouseListener(this);
 
-        submit = new JButton("Submit");
+        submit = new JButton("Submit Order");
         submit.addActionListener(this);
 
         addHamper = new JButton("Add a Hamper");

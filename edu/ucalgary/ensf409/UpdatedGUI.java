@@ -36,7 +36,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
     }
 
     public GUI(){
-        super("Create a order");
+        super("Create your Hamper order");
         setupGUI();
         setSize(600,400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);   

@@ -12,22 +12,16 @@ public class AdultFemale extends ClientDailyNeeds
 	
 	//Constructor:
 	public AdultFemale(String[][] dailyNeeds) throws Exception
-	{
-		if (dailyNeeds == null) 
+	{ 
+		for (int i = 0; i < dailyNeeds.length; i++) 
 		{
-			throw new NullPointerException();
+			super(Integer.parseInt(dailyNeeds[CLIENTID - 1][1]),
+				Integer.parseInt(dailyNeeds[CLIENTID - 1][2]),
+				Integer.parseInt(dailyNeeds[CLIENTID - 1][3]),
+				Integer.parseInt(dailyNeeds[CLIENTID - 1][4]),
+				Integer.parseInt(dailyNeeds[CLIENTID - 1][5]));
 		}
-
-		else {
-			for (int i = 0; i < dailyNeeds.length; i++) 
-			{
-					FoodContent(Integer.parseInt(dailyNeeds[CLIENTID - 1][1]),
-						Integer.parseInt(dailyNeeds[CLIENTID - 1][2]),
-						Integer.parseInt(dailyNeeds[CLIENTID - 1][3]),
-						Integer.parseInt(dailyNeeds[CLIENTID - 1][4]),
-						Integer.parseInt(dailyNeeds[CLIENTID - 1][5]));
-			}
-		}
+		
 	}
 
 }

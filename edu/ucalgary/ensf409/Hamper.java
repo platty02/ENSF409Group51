@@ -154,7 +154,7 @@ public class Hamper{
     public String[] returnOptimalHamper(){
 
         if(this.possibleCombosAccess.size() == 0){
-            // through exception here! no hamers found !!!!!!!!!!!!
+            // throw exception here! no hamers found !!!!!!!!!!!!
         }
         
         int minAccess = this.possibleCombosAccess.get(0);

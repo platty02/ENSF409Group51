@@ -16,7 +16,7 @@ public class HamperList
 	public HamperList(int numberOfHampers)
 	{
 		this.hamperArray = new ArrayList<Hamper>();
-		this.numberOfHampers = numberOfHampers;
+		this.numberOfHampers = 0;
 	}
 	public void setHamperCount(int numberOfHampers)
 	{

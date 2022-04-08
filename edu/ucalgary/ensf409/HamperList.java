@@ -12,8 +12,8 @@ public class HamperList
 	private ArrayList<Hamper> hamperArray;
 	private int numberOfHampers;
 	
-	//Constructor:
-	public HamperList(int numberOfHampers)
+	//Constructor creates the HamperList and resets the Hamper Count.
+	public HamperList()
 	{
 		this.hamperArray = new ArrayList<Hamper>();
 		this.numberOfHampers = 0;

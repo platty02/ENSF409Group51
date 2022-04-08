@@ -1,11 +1,11 @@
 /**
 @author JamesPlatt 
 UCID: 30130627
-@version 1.0 April, 5, 2022
+@version 1.2 April, 7, 2022
 @since 1.0 April, 5, 2022
 **/
 package edu.ucalgary.ensf409;
-
+import java.sql.*;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import javax.swing.*;
@@ -13,11 +13,17 @@ import java.awt.event.*;
 import java.awt.FlowLayout;
 
 public class GUI extends JFrame implements ActionListener, MouseListener{
+    private static AdultMale AdultMale;
+    private static AdultFemale AdultFemale;
+    private static ChildOver8 ChildOver8;
+    private static ChildUnder8 ChildUnder8;
+    private static DataStorage data;
+    private HamperList order;
     private String numAdultMale;
     private String numAdultFemale;
     private String numChildOver8;
     private String numChildUnder8;
-    private JLabel instructions;
+    private JTextArea instructions;
     private JLabel maleLabel;
     private JLabel femaleLabel;
     private JLabel childUnderLabel;
@@ -28,32 +34,53 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
     private JTextField cUInput;
     private JButton submit;
     private JButton addHamper;
+    private JButton orderInfo;
+    private JButton clearOrder;
     public static void main(String args[]){
+        //connecting to the dataBase
+        data = new DataStorage("jdbc:mysql://localhost/FOOD_INVENTORY");
+        data.initializeConnection();
+        data.setAvaliableFoodTable("AVAILABLE_FOOD", data.numberOfFoodItems("AVAILABLE_FOOD") );
+        data.setDailyClientNeedsTable("DAILY_ClIENT_NEEDS");
+        try{    
+            //setting Client needs classes.
+            AdultMale = new AdultMale(data.getDailyClientNeedsTable());
+            AdultFemale = new AdultFemale(data.getDailyClientNeedsTable());
+            ChildOver8 = new ChildOver8(data.getDailyClientNeedsTable());
+            ChildUnder8 = new ChildUnder8(data.getDailyClientNeedsTable());
+        }
+        catch(Exception e){
+            throw new IllegalAccessError();
+        }
         EventQueue.invokeLater(() -> {
             new GUI().setVisible(true);
         });
+        data.close();
     }
 
     public GUI(){
+        //create window and setup order.
         super("Create a order");
         setupGUI();
         setSize(500,500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);   
+        this.order = new HamperList(AdultMale, AdultFemale, ChildOver8, ChildUnder8);
     }
 
     private void setupGUI(){
-        //setting labels.
-        instructions = new JLabel("this is a test build, instructions will be added later.");
+        //setting labels. // To use this program, add the number of family members for your first hamper, then click add. Follow the same procedure for each hamper you like to add to the order. Then press info to confrim that your hampers have been inputed correctly, and click submit to place the order.
+        instructions = new JTextArea("Welcome to group 51' ENSF409 Final project. To use this program, add the number of family members for your first hamper, then click add. Follow the same procedure for    each hamper you like to add to the order. Then press info to confrim that your hampers have been inputed correctly, and click submit to place the order.", 5 ,43);
+        instructions.setLineWrap(true);
         maleLabel = new JLabel("Number of males in digit form:");
         femaleLabel = new JLabel("Number of females in digit form:");
         childUnderLabel = new JLabel("Number of children under 8 in digit form:");
         cOverLabel = new JLabel("Number of children over 8 in digit form:");
 
         //setting test fields.
-        mInput = new JTextField("eg 3");
-        fInput = new JTextField("eg 2");
-        cOInput = new JTextField("eg 1");
-        cUInput = new JTextField("eg 0");
+        mInput = new JTextField("# of adult males: eg 3");
+        fInput = new JTextField("# of adult females: eg 2");
+        cOInput = new JTextField("# of children over 8: eg 1");
+        cUInput = new JTextField("# of children uncer 8: eg 0");
 
         //setting listeners.
         mInput.addMouseListener(this);
@@ -61,12 +88,19 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         cOInput.addMouseListener(this);
         cUInput.addMouseListener(this);
 
+        //creating the buttons seen on the bottom
         submit = new JButton("Submit");
         submit.addActionListener(this);
 
-        addHamper = new JButton("addToHamperList");
+        addHamper = new JButton("Add");
         addHamper.addActionListener(this);
 
+        orderInfo = new JButton("Info");
+        orderInfo.addActionListener(this);
+
+        clearOrder = new JButton("Clear");
+        clearOrder.addActionListener(this);
+        //setting panels
         JPanel header = new JPanel();
         header.setLayout(new FlowLayout());
 
@@ -75,7 +109,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
 
         JPanel submitPanel = new JPanel();
         submitPanel.setLayout(new FlowLayout());
-
+        //adding elements to the panels.
         header.add(instructions);
         infoPanel.add(mInput);
         infoPanel.add(fInput);
@@ -83,6 +117,8 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         infoPanel.add(cUInput);
         submitPanel.add(submit);
         submitPanel.add(addHamper);
+        submitPanel.add(orderInfo);
+        submitPanel.add(clearOrder);
 
         this.add(header, BorderLayout.NORTH);
         this.add(infoPanel, BorderLayout.CENTER);
@@ -123,14 +159,32 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
 
     public void actionPerformed(ActionEvent event){
         if(event.getSource() == submit ){
+            //this is where the calculate order stuff will go.
             JOptionPane.showMessageDialog(this, "The Hampers have been submitted and are being processed.");
         }
         else if(event.getSource() == addHamper){
-            numAdultMale = mInput.getText();
-            numAdultFemale = fInput.getText();
-            numChildOver8 = cOInput.getText();
-            numChildUnder8 = cUInput.getText();
+            //take in the inputes from the text fileds
+            numAdultMale = mInput.getText().trim();
+            numAdultFemale = fInput.getText().trim();
+            numChildOver8 = cOInput.getText().trim();
+            numChildUnder8 = cUInput.getText().trim();
+            //take a input and add a Hamper to the hamper list.
+            this.order.addToHamper(Integer.parseInt(numAdultMale), Integer.parseInt(numAdultFemale), Integer.parseInt(numChildOver8), Integer.parseInt(numChildUnder8));
+            //reset input fields.
+            mInput.setText("");
+            fInput.setText("");
+            cOInput.setText("");
+            cUInput.setText("");
             JOptionPane.showMessageDialog(this, "the inputs have been accepted.");
+        }
+        else if(event.getSource() == orderInfo){
+            //show number of hampers stored in hamper list.
+            JOptionPane.showMessageDialog(this, "Your order contains the following number of hamppers: " + order.getHamperCount());
+        }
+        else if(event.getSource() == clearOrder){
+            //reset the hamperList incase the user made a mistake.
+            this.order = new HamperList(AdultMale, AdultFemale, ChildOver8, ChildUnder8);
+            JOptionPane.showMessageDialog(this, "All hampers have been removed from Order.");
         }
     }
 }

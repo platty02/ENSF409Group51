@@ -20,11 +20,11 @@ public class HamperList
 	}
 	public void setHamperCount(int numberOfHampers)
 	{
-		this.numberOfHampers = numberOfHampers
+		this.numberOfHampers = numberOfHampers;
 	}
 	public int getHamperCount()
 	{
-		return this.numberOfHampers;
+		return this.hamperArray.size();
 	}
 	public void addToHamper(Hamper hamper)
 	{

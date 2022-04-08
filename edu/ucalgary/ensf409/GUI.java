@@ -1,7 +1,7 @@
 /**
 @author JamesPlatt 
 UCID: 30130627
-@version 1.2 April, 7, 2022
+@version 1.3 April, 7, 2022
 @since 1.0 April, 5, 2022
 **/
 package edu.ucalgary.ensf409;
@@ -64,7 +64,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         setupGUI();
         setSize(500,500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);   
-        this.order = new HamperList(AdultMale, AdultFemale, ChildOver8, ChildUnder8);
+        this.order = new HamperList();
     }
 
     private void setupGUI(){
@@ -77,10 +77,10 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         cOverLabel = new JLabel("Number of children over 8 in digit form:");
 
         //setting test fields.
-        mInput = new JTextField("# of adult males: eg 3");
-        fInput = new JTextField("# of adult females: eg 2");
-        cOInput = new JTextField("# of children over 8: eg 1");
-        cUInput = new JTextField("# of children uncer 8: eg 0");
+        mInput = new JTextField("eg 3");
+        fInput = new JTextField("eg 2");
+        cOInput = new JTextField("eg 1");
+        cUInput = new JTextField("eg 0");
 
         //setting listeners.
         mInput.addMouseListener(this);
@@ -111,10 +111,14 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         submitPanel.setLayout(new FlowLayout());
         //adding elements to the panels.
         header.add(instructions);
-        infoPanel.add(mInput);
+        infoPanel.add(maleLabel);
+		infoPanel.add(mInput);
+		infoPanel.add(femaleLabel);
         infoPanel.add(fInput);
+		infoPanel.add(childUnderLabel);
+		infoPanel.add(cUInput);
+		infoPanel.add(cOverLabel);
         infoPanel.add(cOInput);
-        infoPanel.add(cUInput);
         submitPanel.add(submit);
         submitPanel.add(addHamper);
         submitPanel.add(orderInfo);
@@ -168,8 +172,13 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
             numAdultFemale = fInput.getText().trim();
             numChildOver8 = cOInput.getText().trim();
             numChildUnder8 = cUInput.getText().trim();
+            int[] numToAdd = new int[4];
+            numToAdd[0] = Integer.parseInt(numAdultMale);
+            numToAdd[1] = Integer.parseInt(numAdultFemale);
+            numToAdd[2] = Integer.parseInt(numChildOver8);
+            numToAdd[3] = Integer.parseInt(numChildUnder8);
             //take a input and add a Hamper to the hamper list.
-            this.order.addToHamper(Integer.parseInt(numAdultMale), Integer.parseInt(numAdultFemale), Integer.parseInt(numChildOver8), Integer.parseInt(numChildUnder8));
+            this.order.addToHamper(new Hamper(numToAdd, AdultMale, AdultFemale, ChildOver8, ChildUnder8));
             //reset input fields.
             mInput.setText("");
             fInput.setText("");
@@ -183,7 +192,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         }
         else if(event.getSource() == clearOrder){
             //reset the hamperList incase the user made a mistake.
-            this.order = new HamperList(AdultMale, AdultFemale, ChildOver8, ChildUnder8);
+            this.order = new HamperList();
             JOptionPane.showMessageDialog(this, "All hampers have been removed from Order.");
         }
     }

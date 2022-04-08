@@ -13,18 +13,13 @@ public class ChildUnder8 extends ClientDailyNeeds
 	//Constructor:
 	public ChildUnder8(String[][] dailyNeeds) throws Exception
 	{
-		if (dailyNeeds == null) {
-			throw new NullPointerException();
-		}
-
-		else {
-			for (int i = 0; i < dailyNeeds.length; i++) {
-				FoodContent(Integer.parseInt(dailyNeeds[CLIENTID - 1][1]),
-						Integer.parseInt(dailyNeeds[CLIENTID - 1][2]),
-						Integer.parseInt(dailyNeeds[CLIENTID - 1][3]),
-						Integer.parseInt(dailyNeeds[CLIENTID - 1][4]),
-						Integer.parseInt(dailyNeeds[CLIENTID - 1][5]));
-			}
+		for (int i = 0; i < dailyNeeds.length; i++) 
+		{
+			super(Integer.parseInt(dailyNeeds[CLIENTID - 1][1]),
+				Integer.parseInt(dailyNeeds[CLIENTID - 1][2]),
+				Integer.parseInt(dailyNeeds[CLIENTID - 1][3]),
+				Integer.parseInt(dailyNeeds[CLIENTID - 1][4]),
+				Integer.parseInt(dailyNeeds[CLIENTID - 1][5]));
 		}
 	}
 

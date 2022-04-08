@@ -16,7 +16,14 @@ public class OrderForm
 	public String getFormattedForm()
 	{
 		this.br = new BufferedReader(new FileReader(writeOrderForm()));
-		
+		String s = new String();
+		String formattedString = new String();
+		while((s = br.readLine()) != null)
+		{
+			//Read each line
+			formattedString += s;
+		}
+		return formattedString;
 	}	
 	//Writes the Order Form to the file
 	public File writeOrderForm(String fileName)

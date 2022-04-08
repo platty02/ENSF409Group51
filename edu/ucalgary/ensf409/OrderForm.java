@@ -33,11 +33,11 @@ public class OrderForm
 		return formattedString;
 	}	
 	//Writes the Order Form to the file
-	public File writeOrderForm(String fileName)
+	public File writeOrderForm()
 	{
 		try
 		{
-			this.bw = new BufferedWriter(new FileWriter(fileName + ".txt"));
+			this.bw = new BufferedWriter(new FileWriter("orderForm.txt"));
 			this.bw.write("JJCK Food Bank.......\n");
 			this.bw.write("Hamper Order Form\n\n");
 			this.bw.write("Name: \n");
@@ -48,9 +48,7 @@ public class OrderForm
 			{
 				this.bw.write(this.REPORT.get(i) + "\n");
 			}
-			
-			return fileName + ".txt";
-			
+			return "orderForm.txt";
 		}
 		catch(IOException e)
 		{

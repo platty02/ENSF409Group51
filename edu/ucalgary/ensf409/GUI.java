@@ -1,7 +1,7 @@
 /**
 @author JamesPlatt 
 UCID: 30130627
-@version 1.3 April, 7, 2022
+@version 1.4 April, 7, 2022
 @since 1.0 April, 5, 2022
 **/
 package edu.ucalgary.ensf409;
@@ -192,7 +192,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         }
         else if(event.getSource() == clearOrder){
             //reset the hamperList incase the user made a mistake.
-            this.order = new HamperList();
+            this.order.clearHamperArray();
             JOptionPane.showMessageDialog(this, "All hampers have been removed from Order.");
         }
     }

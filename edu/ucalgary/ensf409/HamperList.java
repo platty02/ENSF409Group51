@@ -34,4 +34,8 @@ public class HamperList
 	{
 		this.hamperArray.remove(hamper);
 	}
+	public void clearHamperArray()
+	{
+		this.hamperArray.clear();
+	}
 }

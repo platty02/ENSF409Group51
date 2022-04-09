@@ -29,10 +29,12 @@ public class HamperList
 	public void addToHamper(Hamper hamper)
 	{
 		this.hamperArray.add(hamper);
+		this.numberOfHampers++;
 	}
 	public void takeFromHamper(Hamper hamper)
 	{
 		this.hamperArray.remove(hamper);
+		this.numberOfHampers--;
 	}
 	public void clearHamperArray()
 	{

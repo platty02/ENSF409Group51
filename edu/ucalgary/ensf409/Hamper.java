@@ -28,7 +28,7 @@ public class Hamper{
     private final int TOTAL_FRUITVEGGIE_CALORIES;
     private final int TOTAL_PROTIEN_CALORIES;
     private final int TOTAL_OTHER_CALORIES;
-    private final int[] CLIENTAMOUNTS;
+    private static final int[] CLIENTAMOUNTS;
     private Item[] items;
     private ArrayList<String[]> possibleCombos = new ArrayList<String[]>();
     private ArrayList<Integer> possibleCombosExtra = new ArrayList<Integer>();
@@ -43,7 +43,7 @@ public class Hamper{
         int protein = 0;
         int other = 0;
 
-        this.numOfClients = clientAmount;
+        this.CLIENTAMOUNTS = clientAmount;
         
         // Calling each client to get the total net calories across all clients
         net += AdultMales.getCalories() * clientAmount[0];
@@ -195,6 +195,10 @@ public class Hamper{
 
     //getter for clientAmounts.
     public int[] getCientAmounts(){
-        return this.CLIENTAMOUNTS;
+        return CLIENTAMOUNTS;
+    }
+    public static int getNumOfClientsAt(int index)
+    {
+        return CLIENTAMOUNTS[index];
     }
 }

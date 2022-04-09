@@ -28,7 +28,7 @@ public class Hamper{
     private final int TOTAL_FRUITVEGGIE_CALORIES;
     private final int TOTAL_PROTIEN_CALORIES;
     private final int TOTAL_OTHER_CALORIES;
-    private static final int[] CLIENTAMOUNTS;
+    private final int[] CLIENTAMOUNTS;
     private Item[] items;
     private ArrayList<String[]> possibleCombos = new ArrayList<String[]>();
     private ArrayList<Integer> possibleCombosExtra = new ArrayList<Integer>();
@@ -195,10 +195,10 @@ public class Hamper{
 
     //getter for clientAmounts.
     public int[] getCientAmounts(){
-        return CLIENTAMOUNTS;
+        return this.CLIENTAMOUNTS;
     }
-    public static int getNumOfClientsAt(int index)
+    public int getNumOfClientsAt(int index)
     {
-        return CLIENTAMOUNTS[index];
+        return this.CLIENTAMOUNTS[index];
     }
 }

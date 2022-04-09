@@ -22,15 +22,23 @@ public class OrderForm
 	//Retrives a formatted String of the Order Form taken from the collection of Hampers in HamperList.
 	public String getFormattedForm()
 	{
-		this.br = new BufferedReader(new FileReader(writeOrderForm()));
-		String s = new String();
-		String formattedString = new String();
-		while((s = br.readLine()) != null)
+		try
 		{
-			//Read each line
-			formattedString += s;
+			this.br = new BufferedReader(new FileReader(writeOrderForm()));
+			String s = new String();
+			String formattedString = new String();
+			while((s = br.readLine()) != null)
+			{
+				//Read each line
+				formattedString += s;
+			}
+			return formattedString;
 		}
-		return formattedString;
+		catch(IOException e)
+		{
+			System.err.println("orderForm.txt could not be read, it may not exist yet!");
+			System.exit(1);
+		}
 	}	
 	//Writes the Order Form to the file
 	public File writeOrderForm()

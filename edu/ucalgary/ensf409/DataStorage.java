@@ -3,7 +3,7 @@
 /**
 @author Kolby Lalonde 
 UCID: 30115568
-@version 1.1 April, 3, 2022
+@version 1.2 April, 9, 2022
 @since 1.0 March, 29, 2022
 **/
 
@@ -193,6 +193,30 @@ public class DataStorage {
         }           
         return food.toString().trim();
     }
+
+    // Method to delete an Item from the database after it has been used in a hamper order
+    public void delete(String ItemID){
+
+        initializeConnection();
+
+        try {
+            String query = "DELETE FROM AVAILABLE_FOOD WHERE ItemID = ?";
+            PreparedStatement myStmt = dbConnect.prepareStatement(query);
+
+            myStmt.setString(1, ItemID);
+                        
+            int rowCount = myStmt.executeUpdate();
+            System.out.println("Rows affected: " + rowCount);
+            
+            myStmt.close();
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }  
+
+        close();             
+
+    }    
     
     // Method to close database connection
     public void close() {
@@ -203,6 +227,8 @@ public class DataStorage {
             e.printStackTrace();
         }              
     }
+
+   
 
     public static void main(String[] args) {
 

@@ -197,8 +197,23 @@ public class Hamper{
     public int[] getCientAmounts(){
         return this.CLIENTAMOUNTS;
     }
-    public int getNumOfClientsAt(int index)
+    public String getNumOfClientsAt(int index)
     {
-        return this.CLIENTAMOUNTS[index];
+        if(index == 0)
+        {
+            return this.CLIENTAMOUNTS[index] + " Adult Male";
+        }
+        else if(index == 1)
+        {
+            return this.CLIENTAMOUNTS[index] + " Adult Female";
+        }
+        else if(index == 2)
+        {
+            return this.CLIENTAMOUNTS[index] + " Child over 8";
+        }
+        else if(index == 3)
+        {
+            return this.CLIENTAMOUNTS[index] + " Child under 8";
+        }
     }
 }

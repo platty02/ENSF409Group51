@@ -163,7 +163,8 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
 
     public void actionPerformed(ActionEvent event){
         if(event.getSource() == submit ){
-            //this is where the calculate order stuff will go.
+             //this is where the calculate order stuff will go.
+            this.order.calculateOrder(food);
             JOptionPane.showMessageDialog(this, "The Hampers have been submitted and are being processed.");
         }
         else if(event.getSource() == addHamper){

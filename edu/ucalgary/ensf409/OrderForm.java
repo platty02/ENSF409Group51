@@ -46,8 +46,10 @@ public class OrderForm
 			
 			for(int i = 0; i < this.REPORT.length; i++)
 			{
+				this.bw.write("Hamper " + (i + 1) + " Items:\n");
 				this.bw.write(this.REPORT.get(i) + "\n");
 			}
+			
 			return "orderForm.txt";
 		}
 		catch(IOException e)

@@ -23,6 +23,12 @@ public class HamperList
 	{
 		this.numberOfHampers = numberOfHampers;
 	}
+	//Retrieves the Hamper ArrayList.
+	public ArrayList<Hamper> getHamperArray()
+	{
+		return this.hamperArray;
+	}
+	
 	public int getHamperCount()
 	{
 		return this.hamperArray.size();
@@ -41,6 +47,7 @@ public class HamperList
 	{
 		this.hamperArray.clear();
 	}
+	
 	//public Class to calculate the optimal setup of food items.
 	public void calculateOrder(AvailibleFood availibleFood){
 		for(int i =0; i < this.hamperArray.size(); i++){

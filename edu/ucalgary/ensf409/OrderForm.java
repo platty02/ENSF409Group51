@@ -71,9 +71,9 @@ public class OrderForm
 				this.bw.write("Hamper " + (i + 1) + ": ");
 				while(k < 4)
 				{
-					if(Hamper.getNumOfClientsAt(k) != 0)
+					if(this.REPORT.get(i).getNumOfClientsAt(k) != 0)
 					{
-						this.bw.write(Hamper.getNumOfClientsAt(k) + ", ");
+						this.bw.write(this.REPORT.get(i).getNumOfClientsAt(k) + ", ");
 					}
 					k++;
 				}

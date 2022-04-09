@@ -24,7 +24,7 @@ public class OrderForm
 	{
 		try
 		{
-			this.br = new BufferedReader(new FileReader(writeOrderForm()));
+			this.br = new BufferedReader(new FileReader("orderForm.txt"));
 			String s = new String();
 			String formattedString = new String();
 			while((s = br.readLine()) != null)
@@ -54,7 +54,7 @@ public class OrderForm
 		}
 	}	
 	//Writes the Order Form to the file
-	public File writeOrderForm()
+	public void writeOrderForm()
 	{
 		try
 		{
@@ -84,8 +84,6 @@ public class OrderForm
 				this.bw.write("Hamper " + (i + 1) + " Items:\n");
 				this.bw.write(this.REPORT.get(i) + "\n");
 			}
-			
-			return "orderForm.txt";
 		}
 		catch(IOException e)
 		{

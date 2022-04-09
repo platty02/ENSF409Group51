@@ -215,5 +215,6 @@ public class Hamper{
         {
             return this.CLIENTAMOUNTS[index] + " Child under 8";
         }
+        else{ return ""; }
     }
 }

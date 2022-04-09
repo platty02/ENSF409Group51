@@ -1,7 +1,7 @@
 /**
-author: Carlos Morera Pinilla and Jacob Adeyemo
-version: 1.4
-since: 1.0
+@author: Carlos Morera Pinilla and Jacob Adeyemo
+@version: 1.4
+@since: 1.0
 */
 
 
@@ -65,6 +65,7 @@ public class OrderForm
 			this.bw.write("Name: \n");
 			this.bw.write("Date: \n\n");
 			this.bw.write("Original Request: \n");
+			//Writes to the file, all client types involved in each Hamper.
 			for(int i = 0; i < this.REPORT.getHamperCount(); i++)
 			{
 				this.bw.write("Hamper " + (i + 1) + ": ");
@@ -78,7 +79,7 @@ public class OrderForm
 				}
 				this.bw.write("\n");
 			}
-			
+			//Writes all items in the Hamper.
 			for(int i = 0; i < this.REPORT.getHamperCount(); i++)
 			{
 				this.bw.write("Hamper " + (i + 1) + " Items:\n");

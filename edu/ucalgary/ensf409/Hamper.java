@@ -32,6 +32,7 @@ public class Hamper{
     private Item[] items;
     private ArrayList<String[]> possibleCombos = new ArrayList<String[]>();
     private ArrayList<Integer> possibleCombosExtra = new ArrayList<Integer>();
+    private static int[] numOfClients;
 
     public Hamper(int[] clientAmount, AdultMale AdultMales, AdultFemale AdultFemales, ChildOver8 ChildO8, ChildUnder8 ChildU8){
 
@@ -42,6 +43,8 @@ public class Hamper{
         int protein = 0;
         int other = 0;
 
+        this.numOfClients = clientAmount;
+        
         // Calling each client to get the total net calories across all clients
         net += AdultMales.getCalories() * clientAmount[0];
         net += AdultFemales.getCalories() * clientAmount[1];
@@ -194,6 +197,10 @@ public class Hamper{
     public int[] getCientAmounts(){
         return this.CLIENTAMOUNTS;
     }
-
+    
+    public static getNumOfClientsAt(int index)
+    {
+        return numOfClients[index];
+    }
 
 }

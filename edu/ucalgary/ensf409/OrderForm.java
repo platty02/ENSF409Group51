@@ -82,7 +82,7 @@ public class OrderForm
 			for(int i = 0; i < this.REPORT.getHamperCount(); i++)
 			{
 				this.bw.write("Hamper " + (i + 1) + " Items:\n");
-				this.bw.write(this.REPORT.get(i) + "\n");
+				this.bw.write(this.REPORT.getHamperArray().get(i) + "\n");
 			}
 		}
 		catch(IOException e)

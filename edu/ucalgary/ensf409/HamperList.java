@@ -68,7 +68,8 @@ public class HamperList
 			}
 		}
 		//now write to file using OrderForm.
-		//eneter writting to file code here
+		OrderForm writeOrder = new OrderForm(this.hamperArray);
+		writeOrder.writeOrderForm();
 
 	}
 

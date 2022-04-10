@@ -163,8 +163,23 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
 
     public void actionPerformed(ActionEvent event){
         if(event.getSource() == submit ){
-             //this is where the calculate order stuff will go.
+            //this is where the calculate order stuff will go.
             this.order.calculateOrder(food);
+            ArrayList<Hamper> temp = order.getHamperArray();
+            //remove items from the data base.
+            try{    
+                //loop through all hampers
+                for(int i =0; i < temp.size(); i++){
+                    //loop through all items in each hamper.
+                    for(int j =0; j < temp.get(i).getItems().length; j++){
+                        //delete each item.
+                        data.delete(temp.get(i).getItems()[j].getID());
+                    }
+                }
+            }
+            catch(Exception e){
+                throw new IllegalAccessError();
+            }
             JOptionPane.showMessageDialog(this, "The Hampers have been submitted and are being processed.");
         }
         else if(event.getSource() == addHamper){

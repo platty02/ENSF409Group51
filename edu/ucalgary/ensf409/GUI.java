@@ -1,7 +1,7 @@
 /**
 @author JamesPlatt 
 UCID: 30130627
-@version 1.4 April, 7, 2022
+@version 1.6 April, 10, 2022
 @since 1.0 April, 5, 2022
 **/
 package edu.ucalgary.ensf409;
@@ -129,6 +129,29 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         this.add(submitPanel, BorderLayout.PAGE_END);
     }
 
+    private boolean checkInput(){
+        boolean valid = true;
+        if(numAdultMale.equals("") || numAdultFemale.equals("") || numChildOver8.equals("") || numChildUnder8.equals(""))
+            valid = false;
+        for(int i =0; i < numAdultMale.length();i++){
+            if(numAdultMale.charAt(i) > 57 || numAdultMale.charAt(i) < 48)
+                valid = false;
+        }
+        for(int i =0; i < numAdultFemale.length();i++){
+            if(numAdultFemale.charAt(i) > 57 || numAdultFemale.charAt(i) < 48)
+                valid = false;
+        }
+        for(int i =0; i < numChildOver8.length();i++){
+            if(numChildOver8.charAt(i) > 57 || numChildOver8.charAt(i) < 48)
+                valid = false;
+        }
+        for(int i =0; i < numChildUnder8.length();i++){
+            if(numChildUnder8.charAt(i) > 57 || numChildUnder8.charAt(i) < 48)
+                valid = false;
+        }
+        return valid;
+    }
+
     public void mouseClicked(MouseEvent event){
         
         if(event.getSource().equals(mInput))
@@ -189,18 +212,23 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
             numChildOver8 = cOInput.getText().trim();
             numChildUnder8 = cUInput.getText().trim();
             int[] numToAdd = new int[4];
-            numToAdd[0] = Integer.parseInt(numAdultMale);
-            numToAdd[1] = Integer.parseInt(numAdultFemale);
-            numToAdd[2] = Integer.parseInt(numChildOver8);
-            numToAdd[3] = Integer.parseInt(numChildUnder8);
-            //take a input and add a Hamper to the hamper list.
-            this.order.addToHamper(new Hamper(numToAdd, AdultMale, AdultFemale, ChildOver8, ChildUnder8));
-            //reset input fields.
-            mInput.setText("");
-            fInput.setText("");
-            cOInput.setText("");
-            cUInput.setText("");
-            JOptionPane.showMessageDialog(this, "the inputs have been accepted.");
+            if(checkInput() == true){
+                numToAdd[0] = Integer.parseInt(numAdultMale);
+                numToAdd[1] = Integer.parseInt(numAdultFemale);
+                numToAdd[2] = Integer.parseInt(numChildOver8);
+                numToAdd[3] = Integer.parseInt(numChildUnder8);
+                //take a input and add a Hamper to the hamper list.
+                this.order.addToHamper(new Hamper(numToAdd, AdultMale, AdultFemale, ChildOver8, ChildUnder8));
+                //reset input fields.
+                mInput.setText("");
+                fInput.setText("");
+                cOInput.setText("");
+                cUInput.setText("");
+                JOptionPane.showMessageDialog(this, "the inputs have been accepted.");
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "The inputs are invalid. Please only use 0-9.");
+            }
         }
         else if(event.getSource() == orderInfo){
             //show number of hampers stored in hamper list.

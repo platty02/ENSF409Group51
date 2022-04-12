@@ -235,19 +235,19 @@ public class Hamper{
 
         // Check if the requirements were meet or not in each category and save the shortage values
         if(totalGrain < this.TOTAL_GRAIN_CALORIES){
-            shortageReport[1] = String.valueOf(Math.ceil(this.TOTAL_GRAIN_CALORIES - totalGrain));
+            shortageReport[1] = String.valueOf((int)Math.ceil(this.TOTAL_GRAIN_CALORIES - totalGrain));
         }
         if(totalFV < this.TOTAL_FRUITVEGGIE_CALORIES){
-            shortageReport[2] = String.valueOf(Math.ceil(this.TOTAL_FRUITVEGGIE_CALORIES - totalFV));
+            shortageReport[2] = String.valueOf((int)Math.ceil(this.TOTAL_FRUITVEGGIE_CALORIES - totalFV));
         }
         if(totalProtein < this.TOTAL_PROTIEN_CALORIES){
-            shortageReport[3] = String.valueOf(Math.ceil(this.TOTAL_PROTIEN_CALORIES - totalProtein));
+            shortageReport[3] = String.valueOf((int)Math.ceil(this.TOTAL_PROTIEN_CALORIES - totalProtein));
         }
         if(totalOther < this.TOTAL_OTHER_CALORIES){
-            shortageReport[4] = String.valueOf(Math.ceil(this.TOTAL_OTHER_CALORIES - totalOther));
+            shortageReport[4] = String.valueOf((int)Math.ceil(this.TOTAL_OTHER_CALORIES - totalOther));
         }
         if(totalCalories < this.TOTAL_NET_CALORIES){
-            shortageReport[5] = String.valueOf(Math.ceil(this.TOTAL_NET_CALORIES - totalCalories));
+            shortageReport[5] = String.valueOf((int)Math.ceil(this.TOTAL_NET_CALORIES - totalCalories));
         }
         shortageReport[0] = "SHORT";    // Keyword in first index to indicate there is a shortage
 

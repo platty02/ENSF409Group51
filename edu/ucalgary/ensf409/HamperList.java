@@ -1,6 +1,6 @@
 /**
-author: Carlos Morera Pinilla
-version: 1.3
+author: Carlos Morera Pinilla and James Platt
+version: 1.4
 since: 1.0
 */
 package edu.ucalgary.ensf409;
@@ -12,6 +12,8 @@ public class HamperList
 	//Private Fields:
 	private ArrayList<Hamper> hamperArray;
 	private int numberOfHampers;
+	private String[] shortages = null;
+	private int numOfShortage = -1;
 	
 	//Constructor creates the HamperList and resets the Hamper Count.
 	public HamperList()
@@ -47,14 +49,19 @@ public class HamperList
 	{
 		this.hamperArray.clear();
 	}
-	
+	public String[] returnShortages(){
+		return this.shortages;
+	}
+	public int returnNumShortages(){
+		return this.numOfShortage;
+	}
 	//public Class to calculate the optimal setup of food items.
-	public void calculateOrder(AvailibleFood availibleFood){
+	public void calculateOrder(AvailibleFood availibleFood)throws UnavailableResourcesException{
 		for(int i =0; i < this.hamperArray.size(); i++){
 			//get the optimal hamper in string format
 			String[] foodInStrings = hamperArray.get(i).calculateOptimalHamper(availibleFood);
 			//if a optimal hamper exists, store it as a ItemArray in the Hamper.
-			if(foodInStrings != null){	
+			if(foodInStrings != null && !foodInStrings[0].equals("SHORT")){	
 				Item[] foodInItems = new Item[foodInStrings.length];
 			
 				for(int j =0; j < foodInItems.length; j++){
@@ -64,7 +71,9 @@ public class HamperList
 			}
 			//else no optimal hamper can be made, so insuffcient resources.
 			else{
-				//throw new UnavailibleResourcesException.
+				this.shortages = foodInStrings;
+				this.numOfShortage = i + 1;
+				throw new UnavailableResourcesException(this.shortages);
 			}
 		}
 		//now write to file using OrderForm.

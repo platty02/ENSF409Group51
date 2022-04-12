@@ -3,7 +3,7 @@
 /**
 @author Kolby Lalonde 
 UCID: 30115568
-@version 1.2 April, 9, 2022
+@version 1.3 April, 12, 2022
 @since 1.0 March, 29, 2022
 **/
 
@@ -11,23 +11,31 @@ package edu.ucalgary.ensf409;
 
 import java.sql.*;
 
-// Commands (Kolby) //
+// Data Storage Class Commands //
 // javac -cp .:lib/mysql-connector-java-8.0.23.jar edu/ucalgary/ensf409/DataStorage.java
 // java -cp .:lib/mysql-connector-java-8.0.23.jar edu/ucalgary/ensf409/DataStorage
-// /usr/local/mysql/bin/mysql -u root -p
+
+// Data Storage Class Description //
+/*
+    The DataStorage Class is used to connect and extract data from and sql database.
+This class has been desgined to read in two string tables for the daily client needs
+and the available foods tables.
+*/
 
 public class DataStorage {
 
+    // Data Storage Member Variables
     public final String DBURL;
     public final String USERNAME;
     public final String PASSWORD;    
-    
     private Connection dbConnect;
     private ResultSet results;
 
-    private String [][] dailyClientNeedsTable = new String [4][7]; // 4 row by 6 columns
-    private String [][] avaliableFoodTable;
+    // String tables for extracting database values
+    private String [][] dailyClientNeedsTable = new String [4][7]; // Size of table not dependant on database
+    private String [][] avaliableFoodTable;            // Size dependant on number of database items
     
+    // Constructor
     public DataStorage(String url){
 
         // Database URL
@@ -41,9 +49,9 @@ public class DataStorage {
     //Method to create a connection to the database, no arguments, no return value  
     public void initializeConnection(){
         try{
-            dbConnect = DriverManager.getConnection(this.DBURL, this.USERNAME, this.PASSWORD);
+            dbConnect = DriverManager.getConnection(this.DBURL, this.USERNAME, this.PASSWORD); // creating connection
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.printStackTrace();                        // Error catching
         }              
     }
     
@@ -62,18 +70,18 @@ public class DataStorage {
         return this.PASSWORD;
     }
 
-    // Method to set all daily needs in a member variable
+    // Method to set all daily needs in a string table member variable
     public void setDailyClientNeedsTable(String tableName){     
 
         StringBuffer needs = new StringBuffer();
 
         try{
-            String query = "SELECT * FROM " + tableName;
+            String query = "SELECT * FROM " + tableName;        // Creating the query command
             Statement myStmt = dbConnect.createStatement();
-            results = myStmt.executeQuery(query);
+            results = myStmt.executeQuery(query);               // Executing the query
 
             int i = 0;
-            while (results.next()){  
+            while (results.next()){               // Iterating through results and extracting all values into client needs table
                 this.dailyClientNeedsTable[i][0] = results.getString("ClientID");     
                 this.dailyClientNeedsTable[i][1] = results.getString("Client");
                 this.dailyClientNeedsTable[i][2] = results.getString("WholeGrains");
@@ -85,7 +93,7 @@ public class DataStorage {
             }
         } 
         catch(SQLException e){
-            e.printStackTrace();
+            e.printStackTrace();        // Error checking
         }           
     }
 
@@ -101,33 +109,32 @@ public class DataStorage {
         int i = 0;
 
         try{
-            String query = "SELECT * FROM " + tableName;
+            String query = "SELECT * FROM " + tableName;        // Creating the query command
             Statement myStmt = dbConnect.createStatement();
-            results = myStmt.executeQuery(query);
-            while (results.next()){       
+            results = myStmt.executeQuery(query);               // Executing the query
+            while (results.next()){                  // Loop to find the number of items in data base
                 i++;
             }
         } 
         catch(SQLException e){
-            e.printStackTrace();
+            e.printStackTrace();     // Error checking
         }           
         return i;
-
     }
 
     // Method to set avaliable food table
     public void setAvaliableFoodTable(String tableName, int total){     
 
         StringBuffer needs = new StringBuffer();
-        this.avaliableFoodTable = new String [total][7];
+        this.avaliableFoodTable = new String [total][7]; // Creating the food table with correct size of items
 
         try{
-            String query = "SELECT * FROM " + tableName;
+            String query = "SELECT * FROM " + tableName;        // Creating the query command
             Statement myStmt = dbConnect.createStatement();
-            results = myStmt.executeQuery(query);
+            results = myStmt.executeQuery(query);              // Executing the query
 
             int i = 0;
-            while (results.next()){ 
+            while (results.next()){          // Iterating through results and extracting all values into food table
                 this.avaliableFoodTable[i][0] = results.getString("ItemID");      
                 this.avaliableFoodTable[i][1] = results.getString("Name");
                 this.avaliableFoodTable[i][2] = results.getString("GrainContent");
@@ -139,7 +146,7 @@ public class DataStorage {
             }
         } 
         catch(SQLException e){
-            e.printStackTrace();
+            e.printStackTrace();        // Error checking
         }           
     }
 
@@ -148,136 +155,36 @@ public class DataStorage {
         return this.avaliableFoodTable;
     }
 
-    // Method to return all daily needs in a String
-    public String selectAllNeeds(String tableName){     
-
-        StringBuffer needs = new StringBuffer();
-
-        try{
-            String query = "SELECT * FROM " + tableName;
-            Statement myStmt = dbConnect.createStatement();
-            results = myStmt.executeQuery(query);
-
-            while (results.next()){       
-                needs.append(results.getString("Client") + ", " + results.getString("WholeGrains") + ", "); 
-                needs.append(results.getString("FruitVeggies") + ", " + results.getString("Protein") + ", "); 
-                needs.append(results.getString("Other") + ", " + results.getString("Calories")); 
-                needs.append('\n');  
-            }
-        } 
-        catch(SQLException e){
-            e.printStackTrace();
-        }           
-        return needs.toString().trim();
-    }
-
-    // Method to return all avaliable food in a String
-    public String selectAllFood(String tableName){     
-
-        StringBuffer food = new StringBuffer();
-
-        try{
-            String query = "SELECT * FROM " + tableName;
-            Statement myStmt = dbConnect.createStatement();
-            results = myStmt.executeQuery(query);
-
-            while (results.next()){       
-                food.append(results.getString("Name") + ", " + results.getString("GrainContent") + ", "); 
-                food.append(results.getString("FVContent") + ", " + results.getString("ProContent") + ", "); 
-                food.append(results.getString("Other") + ", " + results.getString("Calories"));
-                food.append('\n'); 
-            }
-        } 
-        catch(SQLException e){
-            e.printStackTrace();
-        }           
-        return food.toString().trim();
-    }
-
     // Method to delete an Item from the database after it has been used in a hamper order
     public void delete(String ItemID){
 
-        initializeConnection();
+        initializeConnection();             // Initailizing database connection
 
         try {
-            String query = "DELETE FROM AVAILABLE_FOOD WHERE ItemID = ?";
-            PreparedStatement myStmt = dbConnect.prepareStatement(query);
+            String query = "DELETE FROM AVAILABLE_FOOD WHERE ItemID = ?"; // Creating the query command
+            PreparedStatement myStmt = dbConnect.prepareStatement(query); // Executing the query
 
             myStmt.setString(1, ItemID);
                         
-            int rowCount = myStmt.executeUpdate();
-            System.out.println("Rows affected: " + rowCount);
+            int rowCount = myStmt.executeUpdate();   // Excuting the deletion
             
             myStmt.close();
 
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+        } catch (SQLException ex) {     
+            ex.printStackTrace();       // Error checking
         }  
 
-        close();             
+        close();    // Closing database connection         
 
     }    
     
     // Method to close database connection
     public void close() {
         try {
-            results.close();
-            dbConnect.close();
+            results.close();     // Closing Connection
+            dbConnect.close();   // Closing ResultSet
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.printStackTrace();    // Error checking
         }              
-    }
-
-   
-
-    public static void main(String[] args) {
-
-        //Creating the datastorage class through path "jdbc:mysql://localhost/FOOD_INVENTORY"
-        DataStorage myJDBC = new DataStorage("jdbc:mysql://localhost/FOOD_INVENTORY");
-        
-        // initializeConnection to the database
-        myJDBC.initializeConnection();
-
-        // testing database extraction
-        System.out.println("------------------------------");
-        System.out.println("***Printing list of DAILY_ClIENT_NEEDS directly from DB:***");
-        System.out.println(myJDBC.selectAllNeeds("DAILY_ClIENT_NEEDS"));
-        System.out.println("------------------------------");
-        System.out.println("***Printing list of AVAILABLE_FOOD directly from DB:***");
-        System.out.println(myJDBC.selectAllFood("AVAILABLE_FOOD"));
-        
-        // testing setting the daily needs table
-        System.out.println("------------------------------");
-        System.out.println("***Setting and showing the daily client needs table:***");
-        myJDBC.setDailyClientNeedsTable("DAILY_ClIENT_NEEDS");
-        String [][] table1 = myJDBC.getDailyClientNeedsTable();
-        for(int i = 0; i < 4; i++){
-            for(int j = 0; j < 6; j++){
-                System.out.println(table1[i][j]);
-            }
-        }
-
-        // testing setting the avalible foods table
-        System.out.println("------------------------------");
-        System.out.println("***Setting and showing the avaliable foods table:***");
-
-        System.out.println("Number of food items = " + myJDBC.numberOfFoodItems("AVAILABLE_FOOD"));
-
-        myJDBC.setAvaliableFoodTable("AVAILABLE_FOOD", myJDBC.numberOfFoodItems("AVAILABLE_FOOD"));
-        String [][] table2 = myJDBC.getAvaliableFoodTable();
-        for(int i = 0; i < myJDBC.numberOfFoodItems("AVAILABLE_FOOD"); i++){
-            String line = "";
-            for(int j = 0; j < 6; j++){
-                
-                line += table2[i][j] + ", ";
-            }
-            System.out.println(line);
-        }
-
-        // Closing connection to database
-        System.out.println("------------------------------");
-        System.out.println("***End of tests.***"); 
-        myJDBC.close();
-                
-    }
+    } 
 }

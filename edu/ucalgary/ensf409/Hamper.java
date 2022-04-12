@@ -2,7 +2,7 @@
 /**
 @author Kolby Lalonde 
 UCID: 30115568
-@version 1.5 April, 12, 2022
+@version 1.5.1 April, 12, 2022
 @since 1.0 March, 25, 2022
 **/
 
@@ -96,7 +96,7 @@ public class Hamper{
     }
 
     // Method to return the optimal hamper combination from the available food items
-    public String[] calculateOptimalHamper(AvailibleFood availableFoods) throws UnavailableResourcesException{
+    public String[] calculateOptimalHamper(AvailibleFood availableFoods){
 
         // Extracting the list of available foods
         ArrayList <Item> foodOptions = availableFoods.returnList();
@@ -116,9 +116,9 @@ public class Hamper{
         String[] myOptimalHamper = returnOptimalHamper(availableFoods);
 
         // Check if the requirements for each category were satisfied
-        if (myOptimalHamper[0].equals("SHORT")){
-            throw new UnavailableResourcesException(myOptimalHamper);   // Throw the unavailable resource exception
-        }
+        //if (myOptimalHamper[0].equals("SHORT")){
+            //throw new UnavailableResourcesException(myOptimalHamper);   // Throw the unavailable resource exception
+        //}
         
         return myOptimalHamper;
     }

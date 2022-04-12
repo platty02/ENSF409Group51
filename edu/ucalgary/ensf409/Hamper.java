@@ -2,13 +2,15 @@
 /**
 @author Kolby Lalonde 
 UCID: 30115568
-@version 1.4 April, 11, 2022
+@version 1.5 April, 12, 2022
 @since 1.0 March, 25, 2022
 **/
 
 package edu.ucalgary.ensf409;
 
 import java.util.*;
+import java.lang.Math;
+
 // Terminal Command //
 // javac edu/ucalgary/ensf409/Hamper.java
 
@@ -23,24 +25,29 @@ The Hamper class is designed to .......
 
 public class Hamper{
 
-    private final int TOTAL_NET_CALORIES;
-    private final int TOTAL_GRAIN_CALORIES;
-    private final int TOTAL_FRUITVEGGIE_CALORIES;
-    private final int TOTAL_PROTIEN_CALORIES;
-    private final int TOTAL_OTHER_CALORIES;
+    // Hamper member variables
+    private final double TOTAL_NET_CALORIES;
+    private final double TOTAL_GRAIN_CALORIES;
+    private final double TOTAL_FRUITVEGGIE_CALORIES;
+    private final double TOTAL_PROTIEN_CALORIES;
+    private final double TOTAL_OTHER_CALORIES;
     private final int[] CLIENTAMOUNTS;
     private Item[] items;
     private ArrayList<String[]> possibleCombos = new ArrayList<String[]>();
-    private ArrayList<Integer> possibleCombosExtra = new ArrayList<Integer>();
+    private ArrayList<Double> possibleCombosExtra = new ArrayList<Double>();
 
+    // Constructor
     public Hamper(int[] clientAmount, AdultMale AdultMales, AdultFemale AdultFemales, ChildOver8 ChildO8, ChildUnder8 ChildU8){
+        
+        // Setting client amount array
         this.CLIENTAMOUNTS = clientAmount;
+        
         // creating variables to hold the intermediate values for each category as each client type is called
-        int net = 0;
-        int grain = 0;
-        int fruitVeggie = 0;
-        int protein = 0;
-        int other = 0;
+        double net = 0;
+        double grain = 0;
+        double fruitVeggie = 0;
+        double protein = 0;
+        double other = 0;
 
         // Calling each client to get the total net calories across all clients
         net += AdultMales.getCalories() * clientAmount[0];
@@ -88,41 +95,55 @@ public class Hamper{
         this.TOTAL_OTHER_CALORIES = other * 7;
     }
 
-    public String[] calculateOptimalHamper(AvailibleFood avaliableFoods) throws UnavailableResourcesException{
+    // Method to return the optimal hamper combination from the available food items
+    public String[] calculateOptimalHamper(AvailibleFood availableFoods) throws UnavailableResourcesException{
 
-        ArrayList <Item> foodOptions = avaliableFoods.returnList();
+        // Extracting the list of available foods
+        ArrayList <Item> foodOptions = availableFoods.returnList();
 
+        // Extracting the total number of foods
         int amount = foodOptions.size();
 
+        // Creating an empty string array the size of amount
         String[] data = new String[amount];
 
+        // Interate through the combinations helper method to call all different number of possible hampers
         for (int num = 0; num <= amount; num++){  
-            combinations(avaliableFoods, data, 0, amount - 1, 0, num);
+            combinations(availableFoods, data, 0, amount - 1, 0, num);
         }
         
-        String[] myOptimalHamper = returnOptimalHamper(avaliableFoods);
+        // Calling helper method to return the string array containing item id's in the optimal hamper
+        String[] myOptimalHamper = returnOptimalHamper(availableFoods);
 
+        // Check if the requirements for each category were satisfied
         if (myOptimalHamper[0].equals("SHORT")){
-            throw new UnavailableResourcesException(myOptimalHamper);
+            throw new UnavailableResourcesException(myOptimalHamper);   // Throw the unavailable resource exception
         }
         
         return myOptimalHamper;
     }
 
+    // Helper Method to check all combinations of a certain amount of items in a hamper
     public void combinations(AvailibleFood avaliableFoods, String[] data, int start, int end, int index, int num) {
 
+        // Extracting the list of available foods
         ArrayList <Item> inventory = avaliableFoods.returnList();
 
+        // Check if num equals index
         int counter = 0;
         if (index == num && num != 0) {
-            int totalGrain = 0;
-            int totalFV = 0;
-            int totalProtein = 0;
-            int totalOther = 0;
-            int totalCalories = 0;
+            
+            // Intermediate category tracker variables
+            double totalGrain = 0;
+            double totalFV = 0;
+            double totalProtein = 0;
+            double totalOther = 0;
+            double totalCalories = 0;
+
+            // Loop through all items in this specific combination
             for(int j = 0; j < num; j++){
                 int x = 0;
-                while(!inventory.get(x).getID().equals(data[j])){
+                while(!inventory.get(x).getID().equals(data[j])){    // loop to find specific item in combination
                     x++;
                 }
                 totalGrain += ((double)inventory.get(x).getGrainContent() / 100) * inventory.get(x).getCalories();
@@ -132,47 +153,54 @@ public class Hamper{
                 totalCalories += inventory.get(x).getCalories();
 
             }
+
+            // Call helper method to see if this combination is valid and meets all requiremnts
             checkValid(data, num, totalGrain, totalFV, totalProtein, totalOther, totalCalories);
         }
  
+        // loop through all the possible combinations of this number (variable "num") of
         for (int i = start; i <= end && ((end - i + 1) >= (num - index)); i++) {
-            data[index] = inventory.get(i).getID();
-            combinations(avaliableFoods, data, i + 1, end, index + 1, num);
+            data[index] = inventory.get(i).getID();                         // Add item id to the data string array
+            combinations(avaliableFoods, data, i + 1, end, index + 1, num); // Recursive call to combination
         }   
     }
 
-    public void checkValid(String[] data, int num, int grain, int fruitVeggies, int protein, int other, int calories){
+    // Helper method to check if the combination is valid and meets all requirements while also tracking the extra
+    public void checkValid(String[] data, int num, double grain, double fruitVeggies, double protein, double other, double calories){
 
-        if(grain >= this.TOTAL_GRAIN_CALORIES && fruitVeggies >= this.TOTAL_FRUITVEGGIE_CALORIES){
-            if(protein>= this.TOTAL_PROTIEN_CALORIES && other >= this.TOTAL_OTHER_CALORIES){
-                if(calories >= this.TOTAL_NET_CALORIES){
+        if(grain >= this.TOTAL_GRAIN_CALORIES && fruitVeggies >= this.TOTAL_FRUITVEGGIE_CALORIES){  // Check if grain and fruit/veg requirements meet
+            if(protein>= this.TOTAL_PROTIEN_CALORIES && other >= this.TOTAL_OTHER_CALORIES){        // Check if protein and other requirements meet
+                if(calories >= this.TOTAL_NET_CALORIES){                                            // Check if net calorie requirements meet
                     String [] combo = new String[num];
-                    for (int j = 0; j < num; j++){
+                    for (int j = 0; j < num; j++){       // Creating the id combo string array
                         combo[j] = data[j];
                     }
-                    int extra = (grain - this.TOTAL_GRAIN_CALORIES );
-                    extra += (fruitVeggies - this.TOTAL_FRUITVEGGIE_CALORIES);
-                    extra += (protein - this.TOTAL_PROTIEN_CALORIES );
-                    extra += (other - this.TOTAL_OTHER_CALORIES);
-                    extra += (calories - this.TOTAL_NET_CALORIES);
-                    this.possibleCombos.add(combo);
-                    this.possibleCombosExtra.add(extra);
+                    double extra = (grain - this.TOTAL_GRAIN_CALORIES );              // Calculating grain extra calories
+                    extra += (fruitVeggies - this.TOTAL_FRUITVEGGIE_CALORIES);     // Calculating fruit and veggies extra calories
+                    extra += (protein - this.TOTAL_PROTIEN_CALORIES );             // Calculating protien extra calories
+                    extra += (other - this.TOTAL_OTHER_CALORIES);                  // Calculating other extra calories
+                    this.possibleCombos.add(combo);                         // Recording that combination of items is possible
+                    this.possibleCombosExtra.add(extra);                    // Recording the total extra the total extra of the combination
         
                 }
             }
         }
     }
 
+    // Helper methopd to find a singular optimal hamper
     public String[] returnOptimalHamper(AvailibleFood avaliableFoods){
 
+        // If no possible combinations have been found
         if(this.possibleCombosExtra.size() == 0){
             String[] shortageReport = new String[6];
-            shortageReport = calculateShortage(avaliableFoods);
+            shortageReport = calculateShortage(avaliableFoods);  // call calculate shortage helper method
             return shortageReport;
         }
         
-        int minAccess = this.possibleCombosExtra.get(0);
+        double minAccess = this.possibleCombosExtra.get(0);
         int index = 0;
+
+        // Loop through all the possible combinations a save the combination with the least amount extra
         for(int i = 0; i < this.possibleCombosExtra.size(); i++){
             if(minAccess > this.possibleCombosExtra.get(i)){
                 minAccess = this.possibleCombosExtra.get(i);
@@ -180,21 +208,23 @@ public class Hamper{
             }
         }
 
-        return this.possibleCombos.get(index);
+        return this.possibleCombos.get(index); 
     }
 
-
+    // Helper method to calculate the shortage of the food in the database to satisfy the order
     public String[] calculateShortage(AvailibleFood avaliableFoods){
 
         String[] shortageReport = new String[6];
         ArrayList <Item> inventory = avaliableFoods.returnList();
 
-        int totalGrain = 0;
-        int totalFV = 0;
-        int totalProtein = 0;
-        int totalOther = 0;
-        int totalCalories = 0;
+        // Intermediate category tracker variables
+        double totalGrain = 0;
+        double totalFV = 0;
+        double totalProtein = 0;
+        double totalOther = 0;
+        double totalCalories = 0;
 
+        // Loop through the entire database inventory
         for(int i = 0; i < inventory.size(); i++){
             totalGrain += ((double)inventory.get(i).getGrainContent() / 100) * inventory.get(i).getCalories();
             totalFV += ((double)inventory.get(i).getFruitContent() / 100) * inventory.get(i).getCalories();
@@ -203,22 +233,23 @@ public class Hamper{
             totalCalories += inventory.get(i).getCalories();
         }
 
+        // Check if the requirements were meet or not in each category and save the shortage values
         if(totalGrain < this.TOTAL_GRAIN_CALORIES){
-            shortageReport[1] = String.valueOf(this.TOTAL_GRAIN_CALORIES - totalGrain);
+            shortageReport[1] = String.valueOf(Math.ceil(this.TOTAL_GRAIN_CALORIES - totalGrain));
         }
         if(totalFV < this.TOTAL_FRUITVEGGIE_CALORIES){
-            shortageReport[2] = String.valueOf(this.TOTAL_FRUITVEGGIE_CALORIES - totalFV);
+            shortageReport[2] = String.valueOf(Math.ceil(this.TOTAL_FRUITVEGGIE_CALORIES - totalFV));
         }
         if(totalProtein < this.TOTAL_PROTIEN_CALORIES){
-            shortageReport[3] = String.valueOf(this.TOTAL_PROTIEN_CALORIES - totalProtein);
+            shortageReport[3] = String.valueOf(Math.ceil(this.TOTAL_PROTIEN_CALORIES - totalProtein));
         }
         if(totalOther < this.TOTAL_OTHER_CALORIES){
-            shortageReport[4] = String.valueOf(this.TOTAL_OTHER_CALORIES - totalOther);
+            shortageReport[4] = String.valueOf(Math.ceil(this.TOTAL_OTHER_CALORIES - totalOther));
         }
         if(totalCalories < this.TOTAL_NET_CALORIES){
-            shortageReport[5] = String.valueOf(this.TOTAL_NET_CALORIES - totalCalories);
+            shortageReport[5] = String.valueOf(Math.ceil(this.TOTAL_NET_CALORIES - totalCalories));
         }
-        shortageReport[0] = "SHORT";
+        shortageReport[0] = "SHORT";    // Keyword in first index to indicate there is a shortage
 
         return shortageReport;
     }
@@ -238,29 +269,9 @@ public class Hamper{
         return this.CLIENTAMOUNTS;
     }
 
+    //getter for a certian client amount
     public int getNumOfClientsAt(int index)
     {
         return this.CLIENTAMOUNTS[index];
     }
-    /*
-    public String getNumOfClientsAt(int index)
-    {
-        if(index == 0)
-        {
-            return this.CLIENTAMOUNTS[index] + " Adult Male";
-        }
-        else if(index == 1)
-        {
-            return this.CLIENTAMOUNTS[index] + " Adult Female";
-        }
-        else if(index == 2)
-        {
-            return this.CLIENTAMOUNTS[index] + " Child over 8";
-        }
-        else if(index == 3)
-        {
-            return this.CLIENTAMOUNTS[index] + " Child under 8";
-        }
-        else{ return ""; }
-    }*/
 }

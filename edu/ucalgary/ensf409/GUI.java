@@ -1,10 +1,11 @@
 /**
 @author JamesPlatt 
 UCID: 30130627
-@version 1.6 April, 10, 2022
+@version 1.7 April, 12, 2022
 @since 1.0 April, 5, 2022
 **/
 package edu.ucalgary.ensf409;
+import java.util.*;
 import java.sql.*;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -18,6 +19,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
     private static ChildOver8 ChildOver8;
     private static ChildUnder8 ChildUnder8;
     private static DataStorage data;
+    private static AvailibleFood food;
     private HamperList order;
     private String numAdultMale;
     private String numAdultFemale;
@@ -48,6 +50,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
             AdultFemale = new AdultFemale(data.getDailyClientNeedsTable());
             ChildOver8 = new ChildOver8(data.getDailyClientNeedsTable());
             ChildUnder8 = new ChildUnder8(data.getDailyClientNeedsTable());
+            food = new AvailibleFood(data.getAvaliableFoodTable());
         }
         catch(Exception e){
             throw new IllegalAccessError();
@@ -65,6 +68,26 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         setSize(500,500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);   
         this.order = new HamperList();
+    }
+
+    private void setupFood(){
+        try{    
+            //settup availible food.
+            data = new DataStorage("jdbc:mysql://localhost/FOOD_INVENTORY");
+            data.initializeConnection();
+            data.setAvaliableFoodTable("AVAILABLE_FOOD", data.numberOfFoodItems("AVAILABLE_FOOD") );
+            data.setDailyClientNeedsTable("DAILY_ClIENT_NEEDS");
+            AdultMale = new AdultMale(data.getDailyClientNeedsTable());
+            AdultFemale = new AdultFemale(data.getDailyClientNeedsTable());
+            ChildOver8 = new ChildOver8(data.getDailyClientNeedsTable());
+            ChildUnder8 = new ChildUnder8(data.getDailyClientNeedsTable());
+            food = new AvailibleFood(data.getAvaliableFoodTable());
+            food = new AvailibleFood(data.getAvaliableFoodTable());
+            data.close();
+        }
+        catch(Exception e){
+            throw new IllegalAccessError();
+        }
     }
 
     private void setupGUI(){
@@ -187,23 +210,39 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
     public void actionPerformed(ActionEvent event){
         if(event.getSource() == submit ){
             //this is where the calculate order stuff will go.
-            this.order.calculateOrder(food);
-            ArrayList<Hamper> temp = order.getHamperArray();
-            //remove items from the data base.
-            try{    
-                //loop through all hampers
-                for(int i =0; i < temp.size(); i++){
-                    //loop through all items in each hamper.
-                    for(int j =0; j < temp.get(i).getItems().length; j++){
-                        //delete each item.
-                        data.delete(temp.get(i).getItems()[j].getID());
+            try{
+                this.order.calculateOrder(food);
+                ArrayList<Hamper> temp = order.getHamperArray();
+                //remove items from the data base.
+                try{    
+                    //loop through all hampers
+                    for(int i =0; i < temp.size(); i++){
+                        //loop through all items in each hamper.
+                        for(int j =0; j < temp.get(i).getItems().length; j++){
+                            //delete each item.
+                            data.delete(temp.get(i).getItems()[j].getID());
+                        }
                     }
                 }
+                catch(Exception e){
+                    throw new IllegalAccessError();
+                }
+                JOptionPane.showMessageDialog(this, "The Hampers have been submitted and are being processed.");
+                for(int i =0; i < food.returnList().size(); i++){
+                    System.out.println(food.returnList().get(i).getID());
+                }
             }
-            catch(Exception e){
-                throw new IllegalAccessError();
+            catch(UnavailableResourcesException e){
+                //a shortage has been found, walk through hamperList to find which one is short.
+                this.setupFood();
+                for(int i =0; i < food.returnList().size(); i++){
+                    System.out.println(food.returnList().get(i).getID());
+                }
+                JOptionPane.showMessageDialog(this, "Your order could not be completed.");
+                JOptionPane.showMessageDialog(this, "The dataBase is short the following calories for Hamper "+ this.order.returnNumShortages());
+                JOptionPane.showMessageDialog(this, "Grain: " + this.order.returnShortages()[1] + " FruitVeg: " + this.order.returnShortages()[2] + " Protein: " + this.order.returnShortages()[3] + " Other: " + this.order.returnShortages()[4]);
             }
-            JOptionPane.showMessageDialog(this, "The Hampers have been submitted and are being processed.");
+            this.order = new HamperList();
         }
         else if(event.getSource() == addHamper){
             //take in the inputes from the text fileds
@@ -236,7 +275,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         }
         else if(event.getSource() == clearOrder){
             //reset the hamperList incase the user made a mistake.
-            this.order.clearHamperArray();
+            this.order = new HamperList();
             JOptionPane.showMessageDialog(this, "All hampers have been removed from Order.");
         }
     }

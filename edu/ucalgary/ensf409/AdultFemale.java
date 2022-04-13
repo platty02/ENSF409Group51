@@ -12,11 +12,13 @@ public class AdultFemale extends ClientDailyNeeds
 	
 	//Constructor:
 	public AdultFemale(String[][] dailyNeeds) throws Exception
-	{ 
-		super(Integer.parseInt(dailyNeeds[CLIENTID - 1][2]),
-				Integer.parseInt(dailyNeeds[CLIENTID - 1][3]),
-				Integer.parseInt(dailyNeeds[CLIENTID - 1][4]),
-				Integer.parseInt(dailyNeeds[CLIENTID - 1][5]);
+	{
+        
+		super(Integer.parseInt(dailyNeeds[1][2]),
+					Integer.parseInt(dailyNeeds[1][3]),
+					Integer.parseInt(dailyNeeds[1][4]),
+					Integer.parseInt(dailyNeeds[1][5]),
+					Integer.parseInt(dailyNeeds[1][6]));
 	}
 
 }

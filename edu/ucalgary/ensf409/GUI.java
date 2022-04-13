@@ -1,7 +1,7 @@
 /**
 @author JamesPlatt 
 UCID: 30130627
-@version 1.7 April, 12, 2022
+@version 1.8 April, 12, 2022
 @since 1.0 April, 5, 2022
 **/
 package edu.ucalgary.ensf409;
@@ -209,17 +209,20 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
 
     public void actionPerformed(ActionEvent event){
         if(event.getSource() == submit ){
-            //this is where the calculate order stuff will go.
-            try{
-                this.order.calculateOrder(food);
+            this.order.calculateOrder(food);
                 ArrayList<Hamper> temp = order.getHamperArray();
+                String[] orderIDs = new String[temp.size()];
                 //remove items from the data base.
                 try{    
                     //loop through all hampers
                     for(int i =0; i < temp.size(); i++){
+                        orderIDs[i] = new String("");
                         //loop through all items in each hamper.
                         for(int j =0; j < temp.get(i).getItems().length; j++){
                             //delete each item.
+                            orderIDs[i] += temp.get(i).getItems()[j].getID();
+                            if(j != temp.get(i).getItems().length -1)
+                                orderIDs[i] += ",";
                             data.delete(temp.get(i).getItems()[j].getID());
                         }
                     }
@@ -227,9 +230,9 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
                 catch(Exception e){
                     throw new IllegalAccessError();
                 }
-                JOptionPane.showMessageDialog(this, "The Hampers have been submitted and are being processed.");
-                for(int i =0; i < food.returnList().size(); i++){
-                    System.out.println(food.returnList().get(i).getID());
+                //output the ideal combos.
+                for(int i =0; i < orderIDs.length; i++){
+                    JOptionPane.showMessageDialog(this, "Hamper " + (i+1) + " food ID's are: " + orderIDs[i]);
                 }
             }
             catch(UnavailableResourcesException e){

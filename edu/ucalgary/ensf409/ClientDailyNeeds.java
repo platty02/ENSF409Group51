@@ -1,5 +1,5 @@
 /**
-author: Carlos Morera Pinilla
+author: Carlos Morera Pinilla and Jacob Adeyemo
 version: 1.2
 since: 1.0
 */

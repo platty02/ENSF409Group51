@@ -1,6 +1,6 @@
 //ENSF409 FINAL PROJECT GROUP 51
 //AvailableFood.java
-//version: 1.2
+//version: 1.3
 //from: 1.0
 package edu.ucalgary.ensf409;
 import java.util.*;
@@ -8,29 +8,37 @@ import java.util.*;
 //keeps an inventory of available items at the
 //time that the data base is accessed.
 public class AvailibleFood {
-    private ArrayList<Item> foodInventory = null;
-    //constructor.
-    public AvailibleFood(String[][] dataTable) throws IllegalArgumentException{
         boolean valid = true;
+        String name = null;
+        String itemID = null;
+        int grain = 0;
+        int fruit = 0;
+        int protein = 0;
+        int other = 0;
+        int calories = 0;
         foodInventory = new ArrayList<Item>();
         //walk through the given data table, adding items
         //for each inidivdual String array.
         for(int i =0; i < dataTable.length;i++){
-            //grabs fields for this specific item, then appends an item
-            //to the end of the list.
-            String name = dataTable[i][1];
-            String itemID = dataTable[i][0];
-            int grain = Integer.parseInt(dataTable[i][2]);
-            int fruit = Integer.parseInt(dataTable[i][3]);
-            int protein = Integer.parseInt(dataTable[i][4]);
-            int other = Integer.parseInt(dataTable[i][5]);
-            int calories = Integer.parseInt(dataTable[i][6]);
-            //check if name, id and all other caloric values are valid.
-            if(dataTable[i] == null || name == null|| itemID == null){
+            if(dataTable[i] == null || dataTable[i][1] == null|| dataTable[i][0] == null){
                 valid = false;
             }
-            else if(grain < 0 || fruit < 0 || protein < 0 || other < 0 || calories < 0 ){
-                valid = false;
+            else{
+                //grabs fields for this specific item, then appends an item
+                //to the end of the list.
+                name = dataTable[i][1];
+                itemID = dataTable[i][0];
+                grain = Integer.parseInt(dataTable[i][2]);
+                fruit = Integer.parseInt(dataTable[i][3]);
+                protein = Integer.parseInt(dataTable[i][4]);
+                other = Integer.parseInt(dataTable[i][5]);
+                calories = Integer.parseInt(dataTable[i][6]);
+                //check if name, id and all other caloric values are valid.
+           
+                if(grain < 0 || fruit < 0 || protein < 0 || other < 0 || calories < 0 ){
+                    valid = false;
+                }
+            
             }
             //if the values from the table are valid, then add a new item to the list. else,
             //throw error.
@@ -38,7 +46,7 @@ public class AvailibleFood {
                 foodInventory.add(new Item(name,itemID,grain,fruit,protein,other,calories));
             else
                 throw new IllegalArgumentException();
-        }
+        }   
     }
 
     //add an item to the array list.

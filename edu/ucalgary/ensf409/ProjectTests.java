@@ -327,35 +327,39 @@ public void testTakeFromHamperMethodEmpty()
 	@Test
 	public void testAdultMaleConstructorValidInput() throws Exception {
 
-		String[][] dailyNeeds = { { "432", "124", "321", "221", "121" }, { "321", "542", "123", "453", "321" },
-				{ "456", "123", "345", "213", "865" }, { "766", "231", "655", "546", "432" } };
+		String[][] dailyNeeds = { { "1", "Adult Male", "101", "102", "103", "104", "105" },
+				{ "2", "Adult Female", "201", "202", "203", "204", "205" },
+				{ "3", "Child over 8", "301", "302", "303", "304", "305" },
+				{ "4", "Child under 8", "401", "402", "403", "404", "405" } };
 
 		AdultMale AdultMale = new AdultMale(dailyNeeds);
 
-		assertEquals("AdultMale constructor when given dailyNeeds array with valid value", 432,
+		assertEquals("AdultMale constructor when given dailyNeeds array with valid value", 101,
 				AdultMale.getWholeGrains());
-		assertEquals("AdultMale constructor when given dailyNeeds array with valid value", 124,
+		assertEquals("AdultMale constructor when given dailyNeeds array with valid value", 102,
 				AdultMale.getFruitsVeggies());
-		assertEquals("AdultMale constructor when given dailyNeeds array with valid value", 321, 
-				AdultMale.getProtein());
-		assertEquals("AdultMale constructor when given dailyNeeds array with valid value", 221, 
-				AdultMale.getOther());
-		assertEquals("AdultMale constructor when given dailyNeeds array with valid value", 121,
+		assertEquals("AdultMale constructor when given dailyNeeds array with valid value", 103, AdultMale.getProtein());
+		assertEquals("AdultMale constructor when given dailyNeeds array with valid value", 104, AdultMale.getOther());
+		assertEquals("AdultMale constructor when given dailyNeeds array with valid value", 105,
 				AdultMale.getCalories());
 
 	}
 
-	// Testing AdultMale constructor when given dailyNeeds array with negative invalid value
+	// Testing AdultMale constructor when given dailyNeeds array with negative
+	// invalid value
 	@Test
 	public void testAdultMaleConstructorInvalidInput() throws Exception {
-		String[][] dailyNeeds = { { "-432", "124", "321", "221", "-121" }, { "321", "542", "123", "453", "321" },
-				{ "456", "123", "345", "213", "865" }, { "766", "231", "655", "546", "432" } };
+		String[][] dailyNeeds = { { "1", "Adult Male", "-101", "-102", "-103", "-104", "-105" },
+				{ "2", "Adult Female", "201", "202", "203", "204", "205" },
+				{ "3", "Child over 8", "301", "302", "303", "304", "305" },
+				{ "4", "Child under 8", "401", "402", "403", "404", "405" } };
 
 		assertThrows("AdultMale constructor when given dailyNeeds array with negative invalid value", Exception.class,
 				() -> new AdultMale(dailyNeeds));
 	}
 
-	// Testing AdultMale constructor when given dailyNeeds array with negative invalid value
+	// Testing AdultMale constructor when given dailyNeeds array with negative
+	// invalid value
 	@Test
 	public void testAdultMaleConstructorNullInput() throws Exception {
 		String[][] dailyNeeds = null;
@@ -363,13 +367,14 @@ public void testTakeFromHamperMethodEmpty()
 				NullPointerException.class, () -> new AdultMale(dailyNeeds));
 	}
 
-    
 	// Testing AdultFemale constructor when given dailyNeeds array with valid value
 	@Test
 	public void testAdultFemaleConstructorValidInput() throws Exception {
 
-		String[][] dailyNeeds = { { "432", "124", "321", "221", "121" }, { "321", "542", "123", "453", "321" },
-				{ "456", "123", "345", "213", "865" }, { "766", "231", "655", "546", "432" } };
+		String[][] dailyNeeds = { { "1", "Adult Male", "432", "124", "321", "221", "121" },
+				{ "2", "Adult Female", "321", "542", "123", "453", "321" },
+				{ "3", "Child over 8", "456", "123", "345", "213", "865" },
+				{ "4", "Child under 8", "766", "231", "655", "546", "432" } };
 
 		AdultFemale adultFemale = new AdultFemale(dailyNeeds);
 
@@ -386,232 +391,82 @@ public void testTakeFromHamperMethodEmpty()
 
 	}
 
-	// Testing AdultFemale constructor when given dailyNeeds array with negative invalid value
+	// Testing AdultFemale constructor when given dailyNeeds array with negative
+	// invalid value
 	@Test
 	public void testAdultFemaleConstructorInvalidInput() throws Exception {
-		String[][] dailyNeeds = { { "432", "124", "321", "221", "121" }, { "-321", "-542", "123", "453", "-321" },
-				{ "456", "123", "345", "213", "865" }, { "766", "231", "655", "546", "432" } };
+		String[][] dailyNeeds = { { "1", "Adult Male", "432", "124", "321", "221", "121" },
+				{ "2", "Adult Female", "-321", "-542", "123", "453", "-321" },
+				{ "3", "Child over 8", "456", "123", "345", "213", "865" },
+				{ "4", "Child under 8", "766", "231", "655", "546", "432" } };
 
 		assertThrows("AdultFemale constructor when given dailyNeeds array with negative invalid value", Exception.class,
 				() -> new AdultFemale(dailyNeeds));
 
 	}
 
-	// Testing AdultFemale constructor when given dailyNeeds array with negative invalid value
+	// Testing AdultFemale constructor when given dailyNeeds array with negative
+	// invalid value
 	@Test
 	public void testAdultFemaleConstructorNullInput() throws NullPointerException, Exception {
 		String[][] dailyNeeds = null;
 		assertThrows("AdultFemale constructor when given dailyNeeds array with negative invalid value",
 				NullPointerException.class, () -> new AdultFemale(dailyNeeds));
 	}
-
+	
     
 	// Testing ChildOver8 constructor when given dailyNeeds array with valid value
 	@Test
 	public void testChildOver8ConstructorValidInput() throws Exception {
 
-		String[][] dailyNeeds = { { "432", "124", "321", "221", "121" }, { "321", "542", "123", "453", "321" },
-				{ "456", "123", "345", "213", "865" }, { "766", "231", "655", "546", "432" } };
+		String[][] dailyNeeds = { { "1", "Adult Male", "101", "102", "103", "104", "105" },
+				{ "2", "Adult Female", "201", "202", "203", "204", "205" },
+				{ "3", "Child over 8", "301", "302", "303", "304", "305" },
+				{ "4", "Child under 8", "401", "402", "403", "404", "405" } };
 
 		ChildOver8 ChildOver8 = new ChildOver8(dailyNeeds);
 
-		assertEquals("ChildOver8 constructor when given dailyNeeds array with valid value", 456,
+		assertEquals("ChildOver8 constructor when given dailyNeeds array with valid value", 301,
 				ChildOver8.getWholeGrains());
-		assertEquals("ChildOver8 constructor when given dailyNeeds array with valid value", 123,
+		assertEquals("ChildOver8 constructor when given dailyNeeds array with valid value", 302,
 				ChildOver8.getFruitsVeggies());
-		assertEquals("ChildOver8 constructor when given dailyNeeds array with valid value", 345,
+		assertEquals("ChildOver8 constructor when given dailyNeeds array with valid value", 303,
 				ChildOver8.getProtein());
-		assertEquals("ChildOver8 constructor when given dailyNeeds array with valid value", 213, 
-				ChildOver8.getOther());
-		assertEquals("ChildOver8 constructor when given dailyNeeds array with valid value", 865,
+		assertEquals("ChildOver8 constructor when given dailyNeeds array with valid value", 304, ChildOver8.getOther());
+		assertEquals("ChildOver8 constructor when given dailyNeeds array with valid value", 305,
 				ChildOver8.getCalories());
 
 	}
 
-	// Testing ChildOver8 constructor when given dailyNeeds array with negative invalid value
+	// Testing ChildOver8 constructor when given dailyNeeds array with negative
+	// invalid value
 	@Test
 	public void testChildOver8ConstructorInvalidInput() throws Exception {
-		String[][] dailyNeeds = { { "432", "124", "321", "221", "121" }, { "321", "542", "123", "453", "321" },
-				{ "456", "123", "345", "-213", "865" }, { "766", "231", "655", "546", "432" } };
+		String[][] dailyNeeds = { { "1", "Adult Male", "101", "102", "103", "104", "105" },
+				{ "2", "Adult Female", "201", "202", "203", "204", "205" },
+				{ "3", "Child over 8", "301", "-302", "303", "304", "-305" },
+				{ "4", "Child under 8", "401", "402", "403", "404", "405" } };
 
 		assertThrows("ChildOver8 constructor when given dailyNeeds array with negative invalid value", Exception.class,
 				() -> new ChildOver8(dailyNeeds));
 	}
 
-	// Testing ChildOver8 constructor when given dailyNeeds array with negative invalid value
-	@Test
-	public void testChildOver8ConstructorNullInput() throws Exception {
-		String[][] dailyNeeds = null;
-		assertThrows("ChildOver8 constructor when given dailyNeeds array with negative invalid value",
-				NullPointerException.class, () -> new ChildOver8(dailyNeeds));
-	}
-
-    
-	// Testing ClientDailyNeeds constructor when given dailyNeeds array with valid value
-	@Test
-	public void testClientDailyNeedsConstructorValidInput() throws Exception {
-
-		ClientDailyNeeds clientDailyNeeds = new ClientDailyNeeds();
-		clientDailyNeeds.FoodContent(489, 431, 531, 312, 743);
-
-		assertEquals("ClientDailyNeeds constructor when given dailyNeeds array with valid value", 489,
-				clientDailyNeeds.getWholeGrains());
-		assertEquals("ClientDailyNeeds constructor when given dailyNeeds array with valid value", 431,
-				clientDailyNeeds.getFruitsVeggies());
-		assertEquals("ClientDailyNeeds constructor when given dailyNeeds array with valid value", 531,
-				clientDailyNeeds.getProtein());
-		assertEquals("ClientDailyNeeds constructor when given dailyNeeds array with valid value", 312,
-				clientDailyNeeds.getOther());
-		assertEquals("ClientDailyNeeds constructor when given dailyNeeds array with valid value", 743,
-				clientDailyNeeds.getCalories());
-
-	}
-
-	// Testing ClientDailyNeeds constructor when given dailyNeeds array with negative invalid value
-	@Test
-	public void testClientDailyNeedsConstructorInvalidInput() throws Exception {
-
-		ClientDailyNeeds clientDailyNeeds = new ClientDailyNeeds();
-
-		assertThrows("ClientDailyNeeds constructor when given dailyNeeds array with negative invalid value",
-				Exception.class, () -> clientDailyNeeds.FoodContent(-489, 431, 531, 312, 743));
-	}
-
-	// Testing getWholeGrains method when given valid WholeGrains value
-	@Test
-	public void testGetWholeGrainsValidInput() throws Exception {
-		ClientDailyNeeds clientDailyNeeds = new ClientDailyNeeds();
-		clientDailyNeeds.FoodContent(489, 431, 531, 312, 743);
-
-		assertEquals("getWholeGrains method when given valid WholeGrains value", 489,
-				clientDailyNeeds.getWholeGrains());
-	}
-
-	// Testing getWholeGrains method when given invalid WholeGrains value
-	@Test
-	public void testGetWholeGrainsInvalidInput() throws Exception {
-		ClientDailyNeeds clientDailyNeeds = new ClientDailyNeeds();
-
-		assertThrows("getWholeGrains method when given invalid WholeGrains value", Exception.class,
-				() -> clientDailyNeeds.FoodContent(-489, 431, 531, 312, 743));
-
-		assertEquals("getWholeGrains method when given invalid WholeGrains value", 0,
-				clientDailyNeeds.getWholeGrains());
-	}
-
-	// Testing getFruitsVeggies method when given valid FruitsVeggies value
-	@Test
-	public void testGetFruitsVeggiesValidInput() throws Exception {
-		ClientDailyNeeds clientDailyNeeds = new ClientDailyNeeds();
-		clientDailyNeeds.FoodContent(489, 431, 531, 312, 743);
-
-		assertEquals("getFruitsVeggies method when given valid FruitsVeggies value", 431,
-				clientDailyNeeds.getFruitsVeggies());
-	}
-
-	// Testing getFruitsVeggies method when given invalid FruitsVeggies value
-	@Test
-	public void testGetFruitsVeggiesInvalidInput() throws Exception {
-		ClientDailyNeeds clientDailyNeeds = new ClientDailyNeeds();
-
-		assertThrows("getFruitsVeggies method when given invalid FruitsVeggies value", Exception.class,
-				() -> clientDailyNeeds.FoodContent(489, -431, 531, 312, 743));
-
-		assertEquals("getFruitsVeggies method when given invalid FruitsVeggies value", 0,
-				clientDailyNeeds.getFruitsVeggies());
-	}
-
-	// Testing getProtein method when given valid Protein value
-	@Test
-	public void testGetProteinValidInput() throws Exception {
-		ClientDailyNeeds clientDailyNeeds = new ClientDailyNeeds();
-		clientDailyNeeds.FoodContent(489, 431, 531, 312, 743);
-
-		assertEquals("getProtein method when given valid Protein value", 531, clientDailyNeeds.getProtein());
-	}
-
-	// Testing getProtein method when given invalid Protein value
-	@Test
-	public void testGetProteinInvalidInput() throws Exception {
-		ClientDailyNeeds clientDailyNeeds = new ClientDailyNeeds();
-		assertThrows("getProtein method when given invalid Protein value", Exception.class,
-				() -> clientDailyNeeds.FoodContent(489, 431, -531, 312, 743));
-
-		assertEquals("getProtein method when given invalid Protein value", 0, clientDailyNeeds.getProtein());
-	}
-
-	// Testing getOther method when given valid Other value
-	@Test
-	public void testGetOtherValidInput() throws Exception {
-		ClientDailyNeeds clientDailyNeeds = new ClientDailyNeeds();
-		clientDailyNeeds.FoodContent(489, 431, 531, 312, 743);
-
-		assertEquals("getOther method when given valid Other value", 312, clientDailyNeeds.getOther());
-	}
-
-	// Testing getOther method when given invalid Other value
-	@Test
-	public void testGetOtherInvalidInput() throws Exception {
-		ClientDailyNeeds clientDailyNeeds = new ClientDailyNeeds();
-		assertThrows("getOther method when given invalid Other value", Exception.class,
-				() -> clientDailyNeeds.FoodContent(489, 431, 531, -312, 743));
-
-		assertEquals("getOther method when given invalid Other value", 0, clientDailyNeeds.getOther());
-	}
-
-	// Testing getCalories method when given valid Calories value
-	@Test
-	public void testGetCaloriesValidInput() throws Exception {
-		ClientDailyNeeds clientDailyNeeds = new ClientDailyNeeds();
-		clientDailyNeeds.FoodContent(489, 431, 531, 312, 743);
-
-		assertEquals("getCalories method when given valid Calories value", 743, clientDailyNeeds.getCalories());
-	}
-
-	// Testing getCalories method when given invalid Calories value
-	@Test
-	public void testGetCaloriesInvalidInput() throws Exception {
-		ClientDailyNeeds clientDailyNeeds = new ClientDailyNeeds();
-		assertThrows("getCalories method when given invalid Calories value", Exception.class,
-				() -> clientDailyNeeds.FoodContent(489, 431, 531, 312, -743));
-
-		assertEquals("getCalories method when given invalid Calories value", 0, clientDailyNeeds.getCalories());
-	}
-
-    
-	// Testing ChildUnder8 constructor when given dailyNeeds array with valid value
-	@Test
-	public void testChildUnder8ConstructorValidInput() throws Exception {
-
-		String[][] dailyNeeds = { { "432", "124", "321", "221", "121" }, { "321", "542", "123", "453", "321" },
-				{ "456", "123", "345", "213", "865" }, { "766", "231", "655", "546", "432" } };
-
-		ChildUnder8 ChildUnder8 = new ChildUnder8(dailyNeeds);
-
-		assertEquals("ChildUnder8 constructor when given dailyNeeds array with valid value", 766,
-				ChildUnder8.getWholeGrains());
-		assertEquals("ChildUnder8 constructor when given dailyNeeds array with valid value", 231,
-				ChildUnder8.getFruitsVeggies());
-		assertEquals("ChildUnder8 constructor when given dailyNeeds array with valid value", 655,
-				ChildUnder8.getProtein());
-		assertEquals("ChildUnder8 constructor when given dailyNeeds array with valid value", 546,
-				ChildUnder8.getOther());
-		assertEquals("ChildUnder8 constructor when given dailyNeeds array with valid value", 432,
-				ChildUnder8.getCalories());
-
-	}
-
-	// Testing ChildUnder8 constructor when given dailyNeeds array with negative invalid value
+	
+	// Testing ChildUnder8 constructor when given dailyNeeds array with negative
+	// invalid value
 	@Test
 	public void testChildUnder8ConstructorInvalidInput() throws Exception {
-		String[][] dailyNeeds = { { "432", "124", "321", "221", "121" }, { "321", "542", "123", "453", "321" },
-				{ "456", "123", "345", "213", "865" }, { "-766", "231", "-655", "546", "432" } };
+		String[][] dailyNeeds = { { "1", "Adult Male", "101", "102", "103", "104", "105" },
+				{ "2", "Adult Female", "201", "202", "203", "204", "205" },
+				{ "3", "Child over 8", "301", "302", "303", "304", "305" },
+				{ "4", "Child under 8", "-401", "402", "403", "404", "405" } };
 
 		assertThrows("ChildUnder8 constructor when given dailyNeeds array with negative invalid value", Exception.class,
 				() -> new ChildUnder8(dailyNeeds));
 	}
-	
-	// Testing ChildUnder8 constructor when given dailyNeeds array with negative invalid value
+
+	// Testing ChildUnder8 constructor when given dailyNeeds array with negative
+	// invalid value
 	@Test
 	public void testChildUnder8ConstructorNullInput() throws Exception {
 		String[][] dailyNeeds = null;
@@ -619,47 +474,162 @@ public void testTakeFromHamperMethodEmpty()
 				NullPointerException.class, () -> new ChildUnder8(dailyNeeds));
 	}
 
-    
-	// Testing OrderForm Constructor when given valid hamperList value
+	// Testing ClientDailyNeeds constructor when given dailyNeeds array with valid
+	// value
 	@Test
-	public void testOrderFormConstructorValidInput() {
-		HamperList hampList = new HamperList(3);
-		OrderForm orderForm = new OrderForm(hamperList);
+	public void testClientDailyNeedsConstructorValidInput() throws Exception {
 
-		assertEquals("OrderForm Constructor when given valid hamperList value", "3", orderForm.getFormattedForm());
+		ClientDailyNeeds clientDailyNeeds = new ClientDailyNeeds(101, 102, 103, 104, 105);
+
+		assertEquals("ClientDailyNeeds constructor when given dailyNeeds array with valid value", 101,
+				clientDailyNeeds.getWholeGrains());
+		assertEquals("ClientDailyNeeds constructor when given dailyNeeds array with valid value", 102,
+				clientDailyNeeds.getFruitsVeggies());
+		assertEquals("ClientDailyNeeds constructor when given dailyNeeds array with valid value", 103,
+				clientDailyNeeds.getProtein());
+		assertEquals("ClientDailyNeeds constructor when given dailyNeeds array with valid value", 104,
+				clientDailyNeeds.getOther());
+		assertEquals("ClientDailyNeeds constructor when given dailyNeeds array with valid value", 105,
+				clientDailyNeeds.getCalories());
+
 	}
 
-	// Testing OrderForm Constructor when given invalid hamperList value
+	// Testing ClientDailyNeeds constructor when given dailyNeeds array with
+	// negative invalid value
 	@Test
-	public void testOrderFormConstructorInvalidInput() {
-		HamperList hampList = new HamperList(-3);
+	public void testClientDailyNeedsConstructorInvalidInput() throws Exception {
 
-		assertThrows("OrderForm Constructor when given invalid hamperList value", IOException.class,
-				() -> new OrderForm(hamperList));
+		assertThrows("ClientDailyNeeds constructor when given dailyNeeds array with negative invalid value",
+				Exception.class, () -> new ClientDailyNeeds(-101, 102, 103, 104, 105));
 	}
 
-	// Testing GetFormattedForm method when given valid hamperList value
+	// Testing getWholeGrains method when given valid WholeGrains value
 	@Test
-	public void testGetFormattedFormValidInput() {
+	public void testGetWholeGrainsValidInput() throws Exception {
+		ClientDailyNeeds clientDailyNeeds = new ClientDailyNeeds(101, 102, 103, 104, 105);
 
-		HamperList hampList = new HamperList(3);
-		OrderForm orderForm = new OrderForm(hamperList);
-
-		assertEquals("GetFormattedForm method when given valid hamperList value", "3", orderForm.getFormattedForm());
+		assertEquals("getWholeGrains method when given valid WholeGrains value", 101,
+				clientDailyNeeds.getWholeGrains());
 	}
 
-	// Testing GetFormattedForm method when given invalid hamperList value
+	// Testing getWholeGrains method when given invalid WholeGrains value
 	@Test
-	public void testGetFormattedFormInvalidInput() {
+	public void testGetWholeGrainsInvalidInput() throws Exception {
+		ClientDailyNeeds clientDailyNeeds = null;
+		try {
+			clientDailyNeeds = new ClientDailyNeeds(-101, 102, 103, 104, 105);
+			assertEquals("getWholeGrains method when given invalid WholeGrains value", 0,
+					clientDailyNeeds.getWholeGrains());
+		} catch (IllegalArgumentException ex) {
+			assertEquals("ClientDailyNeeds Constructor recieved a negative value for one of it's arguments!",
+					ex.getMessage());
+		}
 
-		HamperList hampList = new HamperList(-3);
-		OrderForm orderForm = new OrderForm(hamperList);
+	}
 
-		assertThrows("OrderForm Constructor when given invalid hamperList value", IOException.class,
-				() -> orderForm.getFormattedForm());
-		
-		assertEquals("GetFormattedForm method when given invalid hamperList value", null, orderForm.getFormattedForm());
+	// Testing getFruitsVeggies method when given valid FruitsVeggies value
+	@Test
+	public void testGetFruitsVeggiesValidInput() throws Exception {
+		ClientDailyNeeds clientDailyNeeds = new ClientDailyNeeds(101, 102, 103, 104, 105);
 
+		assertEquals("getFruitsVeggies method when given valid FruitsVeggies value", 102,
+				clientDailyNeeds.getFruitsVeggies());
+	}
+
+	// Testing getFruitsVeggies method when given invalid FruitsVeggies value
+	@Test
+	public void testGetFruitsVeggiesInvalidInput() throws Exception {
+
+		ClientDailyNeeds clientDailyNeeds = null;
+		try {
+			clientDailyNeeds = new ClientDailyNeeds(101, -102, 103, 104, 105);
+			assertEquals("getFruitsVeggies method when given invalid FruitsVeggies value", 0,
+					clientDailyNeeds.getFruitsVeggies());
+		} catch (IllegalArgumentException ex) {
+			assertEquals("ClientDailyNeeds Constructor recieved a negative value for one of it's arguments!",
+					ex.getMessage());
+		}
+
+	}
+
+	// Testing getProtein method when given valid Protein value
+	@Test
+	public void testGetProteinValidInput() throws Exception {
+		ClientDailyNeeds clientDailyNeeds = new ClientDailyNeeds(101, 102, 103, 104, 105);
+
+		assertEquals("getProtein method when given valid Protein value", 103, clientDailyNeeds.getProtein());
+	}
+
+	// Testing getProtein method when given invalid Protein value
+	@Test
+	public void testGetProteinInvalidInput() throws Exception {
+		ClientDailyNeeds clientDailyNeeds = null;
+		try {
+			clientDailyNeeds = new ClientDailyNeeds(101, 102, -103, 104, 105);
+			assertEquals("getProtein method when given invalid Protein value", 0, clientDailyNeeds.getProtein());
+		} catch (IllegalArgumentException ex) {
+			assertEquals("ClientDailyNeeds Constructor recieved a negative value for one of it's arguments!",
+					ex.getMessage());
+		}
+	}
+
+	// Testing getOther method when given valid Other value
+	@Test
+	public void testGetOtherValidInput() throws Exception {
+		ClientDailyNeeds clientDailyNeeds = new ClientDailyNeeds(101, 102, 103, 104, 105);
+
+		assertEquals("getOther method when given valid Other value", 104, clientDailyNeeds.getOther());
+	}
+
+	// Testing getOther method when given invalid Other value
+	@Test
+	public void testGetOtherInvalidInput() throws Exception {
+		ClientDailyNeeds clientDailyNeeds = null;
+		try {
+			clientDailyNeeds = new ClientDailyNeeds(101, 102, 103, -104, 105);
+			assertEquals("getOther method when given invalid Other value", 0, clientDailyNeeds.getOther());
+		} catch (IllegalArgumentException ex) {
+			assertEquals("ClientDailyNeeds Constructor recieved a negative value for one of it's arguments!",
+					ex.getMessage());
+		}
+	}
+
+	// Testing getCalories method when given valid Calories value
+	@Test
+	public void testGetCaloriesValidInput() throws Exception {
+		ClientDailyNeeds clientDailyNeeds = null;
+		try {
+			clientDailyNeeds = new ClientDailyNeeds(101, 102, 103, 104, 105);
+			assertEquals("getCalories method when given valid Calories value", 105, clientDailyNeeds.getCalories());
+		} catch (IllegalArgumentException ex) {
+			assertEquals("ClientDailyNeeds Constructor recieved a negative value for one of it's arguments!",
+					ex.getMessage());
+		}
+	}
+
+	// Testing getCalories method when given invalid Calories value
+	@Test
+	public void testGetCaloriesInvalidInput() throws Exception {
+		ClientDailyNeeds clientDailyNeeds = null;
+		try {
+			clientDailyNeeds = new ClientDailyNeeds(101, 102, 103, 104, -105);
+			assertEquals("getCalories method when given invalid Calories value", 0, clientDailyNeeds.getCalories());
+		} catch (IllegalArgumentException ex) {
+			assertEquals("ClientDailyNeeds Constructor recieved a negative value for one of it's arguments!",
+					ex.getMessage());
+		}
+	}
+
+	// Testing OrderForm Constructor
+	@Test
+	public void testOrderFormConstructor() {
+		ArrayList<Hamper> REPORT = new ArrayList<>();
+
+		try {
+			new OrderForm(REPORT);
+		} catch (Exception e) {
+			fail(e.getMessage()); // if it's failing that means constructor is not working correctly.
+		}
 	}
 
 	

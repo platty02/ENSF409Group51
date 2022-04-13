@@ -1,6 +1,6 @@
 /**
 author: Carlos Morera Pinilla and Jacob Adeyemo
-version: 1.2
+version: 1.3
 since: 1.0
 */
 
@@ -28,25 +28,24 @@ public class ClientDailyNeeds
 		this.OTHER = other;
 		this.CALORIES = calories;
 	}
-	
-	//Getters, they are all final fields.
-	public void getWholeGrains()
+//Getters, they are all final fields.
+	public int getWholeGrains()
 	{
 		return this.WHOLEGRAINS;
 	}
-	public void getFruitVeggies()
+	public int getFruitsVeggies()
 	{
-		return this.WHOLEGRAINS;
+		return this.FRUITVEGGIES;
 	}
-	public void getProtein()
+	public int getProtein()
 	{
 		return this.PROTEIN;
 	}
-	public void getOther()
+	public int getOther()
 	{
 		return this.OTHER;
 	}
-	public void getCalories()
+	public int getCalories()
 	{
 		return this.CALORIES;
 	}

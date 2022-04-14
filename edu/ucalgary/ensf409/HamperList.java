@@ -1,12 +1,15 @@
 /**
 author: Carlos Morera Pinilla and James Platt
-version: 1.4
+version: 1.5
 since: 1.0
 */
 package edu.ucalgary.ensf409;
 import java.util.*;
 import java.io.*;
-
+/*
+HamperList() - Used to hold hampers that are on a order, and do the required work surrounding
+each order.
+*/
 public class HamperList
 {
 	//Private Fields:
@@ -21,37 +24,46 @@ public class HamperList
 		this.numberOfHampers = 0;
 	}
 	
-	//Retrieves the Hamper ArrayList.
+	//Retrieves the Hamper ArrayList and returns it.
 	public ArrayList<Hamper> getHamperArray()
 	{
 		return this.hamperArray;
 	}
-	
+	//retunrs the number of hampers currently stored in the HamperList.
 	public int getHamperCount()
 	{
 		return this.hamperArray.size();
 	}
+	//Adds a given Hmaper to the HamperList.
 	public void addToHamper(Hamper hamper)
 	{
 		this.hamperArray.add(hamper);
 		
 	}
+	//Removes a given hamper from the Hmaperlist.
 	public void takeFromHamper(Hamper hamper)
 	{
 		this.hamperArray.remove(hamper);
 		
 	}
+	//Clears the Hamperlist so that it hase no items.
 	public void clearHamperArray()
 	{
 		this.hamperArray.clear();
 	}
+	//Returns the array of Shortages.
 	public String[] returnShortages(){
 		return this.shortages;
 	}
+	//returns the hamper number for which the order can't be completed.
 	public int returnNumShortages(){
 		return this.numOfShortage;
 	}
-	//public Class to calculate the optimal setup of food items.
+	/*
+	calculateOrder() - calcualtes the optimal hampers for each hamper contained in the hamperList, inOrder.
+	if at any point the optimal hamper cannot be caluclated for the current hamper, a UnavailableResourcesException
+	will be thrown and the shortages will be stored in shortages, aswell as the hamper that caused the error in numOfShortage
+	*/
 	public void calculateOrder(AvailibleFood availibleFood)throws UnavailableResourcesException{
 		for(int i =0; i < this.hamperArray.size(); i++){
 			//get the optimal hamper in string format

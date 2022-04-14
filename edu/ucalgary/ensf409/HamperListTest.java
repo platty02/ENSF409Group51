@@ -1,6 +1,6 @@
 /**
  * @author: Carlos Morera Pinilla
- * @version: 1.1
+ * @version: 1.2
  * @since: 1.0
  */
 
@@ -115,7 +115,7 @@ public class HamperListTest
 
         int expected = 0;
         int actual = hl.getHamperCount();
-        assertEquals("The actual and expected values for testTakeFromHamper do not match", expected, actual);
+        assertEquals("The actual and expected values for clearHamperArray Tests do not match", expected, actual);
     }
     /**Tests to see if the shortages String array has been created. */
     @Test 

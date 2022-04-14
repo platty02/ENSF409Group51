@@ -1,6 +1,6 @@
 /**
  * @author: Carlos Morera Pinilla
- * @version: 1.2
+ * @version: 1.3
  * @since: 1.0
  */
 
@@ -18,7 +18,7 @@ public class HamperListTest
      * and the hamperCount property correctly.
      */
     @Test
-    public void testHamperListConstructor()
+    public void testHamperListConstructor() throws Exception
     {
         //Create HamperList object.
         HamperList hL = new HamperList();
@@ -29,7 +29,7 @@ public class HamperListTest
      * value of the ArrayList field of the HamperList class created in it's Constructor.
      */
     @Test
-    public void testGetHamperCount()
+    public void testGetHamperCount() throws Exception
     {
         HamperList hl = new HamperList();
         //Add some elements to the Hamper.
@@ -59,7 +59,7 @@ public class HamperListTest
      * of Hampers field.
      */
     @Test
-    public void testTakeFromHamper()
+    public void testTakeFromHamper() throws Exception
     {
         HamperList hl = new HamperList();
         //Add some elements to the Hamper.
@@ -90,7 +90,7 @@ public class HamperListTest
  * resetting the count to 0.
  */
     @Test
-    public void testClearHamperArray()
+    public void testClearHamperArray() throws Exception
     {
         HamperList hl = new HamperList();
         //Add some elements to the Hamper.
@@ -119,7 +119,7 @@ public class HamperListTest
     }
     /**Tests to see if the shortages String array has been created. */
     @Test 
-    public void testReturnShortages()
+    public void testReturnShortages() throws Exception
     {
         HamperList hl = new HamperList();
         
@@ -129,22 +129,21 @@ public class HamperListTest
      * Constructor.
     */
     @Test 
-    public void testReturnNumShortages()
+    public void testReturnNumShortages() throws Exception
     {
         HamperList hl = new HamperList();
         int expected = -1;
         int actual = hl.returnNumShortages();
         assertEquals("returnNumShorages() did not return the correct value when created", expected, actual);
     }
-    /**tests to see if the calculateOrder throws the UnavailableResourcesException
+ /**tests to see if the calculateOrder throws the UnavailableResourcesException
      * when there are no more resources available.
      */
-    /*@Test 
-    public void testUnavailableResourcesException()
+    @Test 
+    public void testUnavailableResourcesException() throws Exception
     {
         HamperList hl = new HamperList();
-
-        int[] a1 = {1, 1, 1, 1};
+        int[] a1 = {1, 0, 0, 0};
         
         String[][] dailyNeeds = { { "1", "Adult Male", "16", "28", "26", "30", "2500" },
 				{ "2", "Adult Female", "16", "28", "26", "30", "2000" },
@@ -154,19 +153,18 @@ public class HamperListTest
         AdultFemale aF = new AdultFemale(dailyNeeds);
         ChildOver8 cO8 = new ChildOver8(dailyNeeds);
         ChildUnder8 cU8 = new ChildUnder8(dailyNeeds);
-
         Hamper h1 = new Hamper(a1, aM, aF, cO8, cU8);
         hl.addToHamper(h1);
         
         String[][] testDataBase =  new String[1][];
         String[] testItemInfo = new String[7];
         testItemInfo[0] = "1";
-        testItemInfo[1] = null;
-        testItemInfo[2] = "6";
-        testItemInfo[3] = "6";
-        testItemInfo[4] = "6";
-        testItemInfo[5] = "6";
-        testItemInfo[6] = "6";
+        testItemInfo[1] = "banana";
+        testItemInfo[2] = "25";
+        testItemInfo[3] = "25";
+        testItemInfo[4] = "25";
+        testItemInfo[5] = "25";
+        testItemInfo[6] = "100";
         testDataBase[0] = testItemInfo;
         boolean exceptionThrown = false;
         AvailibleFood aFood = new AvailibleFood(testDataBase);
@@ -179,5 +177,54 @@ public class HamperListTest
             exceptionThrown = true;
         }
         assertEquals("calculateOrder did not throw the UnavaiableResourcesException when insufficient resources were given", exceptionThrown, true);
-    }*/
+    }
+    /**
+     * test to see if the HamperList.calculateOrder() determines the optimal Hampers correctly.
+     */
+    @Test 
+    public void testHamperListCalculateOrder() throws Exception
+    {
+        HamperList hl = new HamperList();
+        int[] a1 = {1, 0, 0, 0};
+        int[] a2 = {0, 1, 0, 0};
+        String[][] dailyNeeds = { { "1", "Adult Male", "16", "28", "26", "30", "300" },
+				{ "2", "Adult Female", "16", "28", "26", "30", "200" },
+				{ "3", "Child over 8", "21", "33", "31", "15", "100" },
+				{ "4", "Child under 8", "21", "33", "31", "15", "80" } };
+        AdultMale aM = new AdultMale(dailyNeeds);
+        AdultFemale aF = new AdultFemale(dailyNeeds);
+        ChildOver8 cO8 = new ChildOver8(dailyNeeds);
+        ChildUnder8 cU8 = new ChildUnder8(dailyNeeds);
+        Hamper h1 = new Hamper(a1, aM, aF, cO8, cU8);
+        Hamper h2 = new Hamper(a2, aM, aF, cO8, cU8);
+
+        hl.addToHamper(h1);
+        hl.addToHamper(h2);
+        
+        String[][] testDataBase =  new String[1][];
+        String[] testItemInfo = new String[7];
+        testItemInfo[0] = "1";
+        testItemInfo[1] = "banana";
+        testItemInfo[2] = "16";
+        testItemInfo[3] = "28";
+        testItemInfo[4] = "26";
+        testItemInfo[5] = "30";
+        testItemInfo[6] = "2150";
+        testDataBase[0] = testItemInfo;
+
+        AvailibleFood aFood = new AvailibleFood(testDataBase);
+        aFood.addItem(new Item("Strawberry", "2", 16, 28, 26, 30, 1450));
+        aFood.addItem(new Item("Blueberry", "3", 16, 28, 26, 30, 1750));
+        aFood.addItem(new Item("Blackberry", "4", 16, 28, 26, 30, 2500));
+        aFood.addItem(new Item("RedBerry", "5", 16, 28, 26, 30, 1100));
+        try
+        {
+            hl.calculateOrder(aFood);
+        }
+        catch(UnavailableResourcesException e)
+        {
+        }
+        assertEquals("calculateOrder did not return the most optimal list of Items for hamper 1", h1.getItems()[0].getID(), "1");
+        assertEquals("calculateOrder did not return the most optimal list of Items for hamper 2", h2.getItems()[0].getID(), "2");
+    }
 }

@@ -58,11 +58,19 @@ public class OrderForm
                     writeOrder.write("\n");
                 }
             }
-            
-            writeOrder.close();
+            try
+	    {
+           	 writeOrder.close();
+	    }
+            catch(IOException e)
+	    {
+	    	System.err.println("Could not close the output file in writeOrder()!");
+		System.exit(1);
+	    }
         }
         catch(IOException e){
-            //do some sort of error responese here?
+            System.err.println("Could not write to the output file in writeOrder()!");
+	    System.exit(1);
         }
     }
 }

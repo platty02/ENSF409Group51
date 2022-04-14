@@ -11,7 +11,6 @@ public class HamperList
 {
 	//Private Fields:
 	private ArrayList<Hamper> hamperArray;
-	private int numberOfHampers;
 	private String[] shortages = null;
 	private int numOfShortage = -1;
 	
@@ -21,10 +20,7 @@ public class HamperList
 		this.hamperArray = new ArrayList<Hamper>();
 		this.numberOfHampers = 0;
 	}
-	public void setHamperCount(int numberOfHampers)
-	{
-		this.numberOfHampers = numberOfHampers;
-	}
+	
 	//Retrieves the Hamper ArrayList.
 	public ArrayList<Hamper> getHamperArray()
 	{
@@ -38,12 +34,12 @@ public class HamperList
 	public void addToHamper(Hamper hamper)
 	{
 		this.hamperArray.add(hamper);
-		this.numberOfHampers++;
+		
 	}
 	public void takeFromHamper(Hamper hamper)
 	{
 		this.hamperArray.remove(hamper);
-		this.numberOfHampers--;
+		
 	}
 	public void clearHamperArray()
 	{

@@ -1,6 +1,6 @@
 /**
 author: Carlos Morera Pinilla and James Platt
-version: 1.5
+version: 1.6
 since: 1.0
 */
 package edu.ucalgary.ensf409;
@@ -80,6 +80,10 @@ public class HamperList
 			//else no optimal hamper can be made, so insuffcient resources.
 			else{
 				this.shortages = foodInStrings;
+				for(int k =0; k < this.shortages.length; k++){
+					if(this.shortages[k] == null)
+						this.shortages[k] = new String("0");
+				}
 				this.numOfShortage = i + 1;
 				throw new UnavailableResourcesException(this.shortages);
 			}

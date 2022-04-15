@@ -1,6 +1,6 @@
 //ENSF409 FINAL PROJECT GROUP 51
 //AvailableFood.java
-//version: 1.3
+//version: 1.4
 //from: 1.0
 package edu.ucalgary.ensf409;
 import java.util.*;
@@ -8,6 +8,12 @@ import java.util.*;
 //keeps an inventory of available items at the
 //time that the data base is accessed.
 public class AvailibleFood {
+    private ArrayList<Item> foodInventory = null;
+    /*
+    AvailibleFood() - constructor that fills an arrayList with Item objects based
+    on the given 2d array, dataTable.
+    */
+    public AvailibleFood(String[][] dataTable) throws IllegalArgumentException{
         boolean valid = true;
         String name = null;
         String itemID = null;
@@ -46,10 +52,10 @@ public class AvailibleFood {
                 foodInventory.add(new Item(name,itemID,grain,fruit,protein,other,calories));
             else
                 throw new IllegalArgumentException();
-        }   
+        }
     }
 
-    //add an item to the array list.
+    //addItem() - add an item to the array list.
     public void addItem(Item food) throws IllegalArgumentException{
         if(food != null)    
             this.foodInventory.add(food);
@@ -57,7 +63,7 @@ public class AvailibleFood {
             throw new IllegalArgumentException();
     }
 
-    //remove an item from the array list and return it.
+    //remove() - remove an item from the array list and return it.
     public Item remove(String itemID){
         //walk through the list until we find the element, then remove
         //and return it.
@@ -75,7 +81,7 @@ public class AvailibleFood {
         return toReturn;
     }
 
-    //return the entire arrayList
+    //returnList() - return the entire arrayList
     public ArrayList<Item> returnList(){
         return this.foodInventory;
     }

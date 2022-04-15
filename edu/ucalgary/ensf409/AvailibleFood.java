@@ -1,4 +1,5 @@
 //ENSF409 FINAL PROJECT GROUP 51
+//Author: Kolby Lalonde James Platt Carlos Morrea Jacob Adeyemo
 //AvailableFood.java
 //version: 1.4
 //from: 1.0

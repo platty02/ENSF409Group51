@@ -16,12 +16,12 @@ import java.lang.Math;
 
 // Hamper Class Description 
 /*
-The Hamper class is designed to .......
+    The Hamper class is designed to act as the calculation class for a singular users hamper
+order. It will take the different client types data and use it along with the number of each client
+that the user has declared in order to get the totals for each category of calories. It then has methods
+that are able to calculate the optimal hamper combination through an avalible foods argument. This
+will allow other classes to return and use the optimal hamper combination as required.
 */
-
-// javac -cp .:lib/mysql-connector-java-8.0.23.jar edu/ucalgary/ensf409/GUI.java
-
-// java -cp .:lib/mysql-connector-java-8.0.23.jar edu/ucalgary/ensf409/GUI
 
 public class Hamper{
 
@@ -114,11 +114,6 @@ public class Hamper{
         
         // Calling helper method to return the string array containing item id's in the optimal hamper
         String[] myOptimalHamper = returnOptimalHamper(availableFoods);
-
-        // Check if the requirements for each category were satisfied
-        //if (myOptimalHamper[0].equals("SHORT")){
-            //throw new UnavailableResourcesException(myOptimalHamper);   // Throw the unavailable resource exception
-        //}
         
         return myOptimalHamper;
     }
@@ -146,6 +141,7 @@ public class Hamper{
                 while(!inventory.get(x).getID().equals(data[j])){    // loop to find specific item in combination
                     x++;
                 }
+                // Adding the items calories in all categories to the sub totals
                 totalGrain += ((double)inventory.get(x).getGrainContent() / 100) * inventory.get(x).getCalories();
                 totalFV += ((double)inventory.get(x).getFruitContent() / 100) * inventory.get(x).getCalories();
                 totalProtein += ((double)inventory.get(x).getProteinContent() / 100) * inventory.get(x).getCalories();
@@ -158,7 +154,7 @@ public class Hamper{
             checkValid(data, num, totalGrain, totalFV, totalProtein, totalOther, totalCalories);
         }
  
-        // loop through all the possible combinations of this number (variable "num") of
+        // loop through all the possible combinations of this number (variable "num") of items in the hamper
         for (int i = start; i <= end && ((end - i + 1) >= (num - index)); i++) {
             data[index] = inventory.get(i).getID();                         // Add item id to the data string array
             combinations(avaliableFoods, data, i + 1, end, index + 1, num); // Recursive call to combination
@@ -197,6 +193,7 @@ public class Hamper{
             return shortageReport;
         }
         
+        // Set the minAccess initally as the first possible combo
         double minAccess = this.possibleCombosExtra.get(0);
         int index = 0;
 
@@ -214,6 +211,7 @@ public class Hamper{
     // Helper method to calculate the shortage of the food in the database to satisfy the order
     public String[] calculateShortage(AvailibleFood avaliableFoods){
 
+        // Creating a string array to report shortages
         String[] shortageReport = new String[6];
         ArrayList <Item> inventory = avaliableFoods.returnList();
 

@@ -1,5 +1,5 @@
 //ENSF409 FINAL PROJECT GROUP 51
-//@author JamesPlatt
+//@author Kolby Lalonde James Platt Carlos Morrea Jacob Adeyemo
 //Item.java
 //version: 1.2
 //from: 1.0 

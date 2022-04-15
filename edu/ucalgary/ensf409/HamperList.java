@@ -1,5 +1,5 @@
 /**
-author: Carlos Morera Pinilla and James Platt
+author: Kolby Lalonde James Platt Carlos Morrea Jacob Adeyemo
 version: 1.7
 since: 1.0
 */

@@ -1,7 +1,7 @@
 //ENSF409 FINAL PROJECT GROUP 51
-//@author Kolby Lalonde James Platt Carlos Morrea Jacob Adeyemo
+//author Kolby Lalonde, James Platt, Carlos Morera Pinilla, Jacob Adeyemo
 //Item.java
-//version: 1.2
+//version: 1.2.1
 //from: 1.0 
 
 package edu.ucalgary.ensf409;

@@ -1,7 +1,7 @@
 /**
 @author JamesPlatt 
 UCID: 30130627
-@version 1.8 April, 12, 2022
+@version 1.9 April, 15, 2022
 @since 1.0 April, 5, 2022
 **/
 package edu.ucalgary.ensf409;
@@ -38,12 +38,18 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
     private JButton addHamper;
     private JButton orderInfo;
     private JButton clearOrder;
+    /*
+    Main() - this is where our entire program starts, creates a connection to the dataBase,
+    grabs the tables, then creates our AvailableFood, and ClientNeeds classes.
+    Then initializes the gui.
+    */
     public static void main(String args[]){
         //connecting to the dataBase
         data = new DataStorage("jdbc:mysql://localhost/FOOD_INVENTORY");
         data.initializeConnection();
         data.setAvaliableFoodTable("AVAILABLE_FOOD", data.numberOfFoodItems("AVAILABLE_FOOD") );
         data.setDailyClientNeedsTable("DAILY_ClIENT_NEEDS");
+        data.close();
         try{    
             //setting Client needs classes.
             AdultMale = new AdultMale(data.getDailyClientNeedsTable());
@@ -58,9 +64,11 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         EventQueue.invokeLater(() -> {
             new GUI().setVisible(true);
         });
-        data.close();
+        
     }
-
+    /*
+    GUI() constructor - creates a JFrame, sets everything up including the size of the window, default behavier, etc.
+    */
     public GUI(){
         //create window and setup order.
         super("Create a order");
@@ -69,7 +77,11 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);   
         this.order = new HamperList();
     }
-
+    /*
+    setupFood() - this is used to reset the AvailibleFoods object and ClientNeeds object. It's used
+    when the the avialibleFood object dosen't reflect the items in the dataBase. (used when an order fails
+    due to shortages in the database.)
+    */
     private void setupFood(){
         try{    
             //settup availible food.
@@ -89,7 +101,10 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
             throw new IllegalAccessError();
         }
     }
-
+    /*
+    setupGUI() - setups the general format and look of the GUI window. sets text fields, labels, buttons, etc, 
+    then adds them to their respective panels, and sets the format.
+    */
     private void setupGUI(){
         //setting labels. // To use this program, add the number of family members for your first hamper, then click add. Follow the same procedure for each hamper you like to add to the order. Then press info to confrim that your hampers have been inputed correctly, and click submit to place the order.
         instructions = new JTextArea("Welcome to group 51' ENSF409 Final project. To use this program, add the number of family members for your first hamper, then click add. Follow the same procedure for    each hamper you like to add to the order. Then press info to confrim that your hampers have been inputed correctly, and click submit to place the order.", 5 ,43);
@@ -151,11 +166,17 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         this.add(infoPanel, BorderLayout.CENTER);
         this.add(submitPanel, BorderLayout.PAGE_END);
     }
-
+    /*
+    checkInput() - used to double check that the input given by the user to the GUI is valid,
+    making sure that they only used numerical digits 0-9.
+    */
     private boolean checkInput(){
         boolean valid = true;
+        //if any of the fields are empty, invalid.
         if(numAdultMale.equals("") || numAdultFemale.equals("") || numChildOver8.equals("") || numChildUnder8.equals(""))
             valid = false;
+        //check for each field that only characters 0-9 are used.
+        //else, invalid.
         for(int i =0; i < numAdultMale.length();i++){
             if(numAdultMale.charAt(i) > 57 || numAdultMale.charAt(i) < 48)
                 valid = false;
@@ -172,9 +193,13 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
             if(numChildUnder8.charAt(i) > 57 || numChildUnder8.charAt(i) < 48)
                 valid = false;
         }
+        //returns true if valid, false otherwise.
         return valid;
     }
-
+    /*  
+    mouseClicked() - event used to notify the program when the user clicks on a text field.
+    when that happens, the text field should be cleared.
+    */
     public void mouseClicked(MouseEvent event){
         
         if(event.getSource().equals(mInput))
@@ -190,7 +215,11 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
             cUInput.setText("");
                 
     }
-    
+    /*
+    mouseEntered(), mouseExited(), mousePressed(), mouseReleased()
+    we didn't want anything to happend when these events occur, so
+    they don't do anything, but still needed to be implemented for the Mouselistener class.
+    */
     public void mouseEntered(MouseEvent event){
         
     }
@@ -206,10 +235,17 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
     public void mouseReleased(MouseEvent event){
         
     }
-
+    /*
+    actionPerformed() - This is where our program reacts to the user clicking one of our four buttons.
+    if they press submit, the current order in the program is submitted and proccess, resources withstanding. 
+    add adds a new hamper to the current order being setup. info brings up a alert with the number of hampers on the
+    current order. Clear clears the current order, starting everything fresh without submitting anything.
+    */
     public void actionPerformed(ActionEvent event){
         if(event.getSource() == submit ){
-            this.order.calculateOrder(food);
+            //this is where the calculate order stuff will go.
+            try{
+                this.order.calculateOrder(food);
                 ArrayList<Hamper> temp = order.getHamperArray();
                 String[] orderIDs = new String[temp.size()];
                 //remove items from the data base.
@@ -238,9 +274,6 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
             catch(UnavailableResourcesException e){
                 //a shortage has been found, walk through hamperList to find which one is short.
                 this.setupFood();
-                for(int i =0; i < food.returnList().size(); i++){
-                    System.out.println(food.returnList().get(i).getID());
-                }
                 JOptionPane.showMessageDialog(this, "Your order could not be completed.");
                 JOptionPane.showMessageDialog(this, "The dataBase is short the following calories for Hamper "+ this.order.returnNumShortages());
                 JOptionPane.showMessageDialog(this, "Grain: " + this.order.returnShortages()[1] + " FruitVeg: " + this.order.returnShortages()[2] + " Protein: " + this.order.returnShortages()[3] + " Other: " + this.order.returnShortages()[4]);
@@ -283,3 +316,4 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         }
     }
 }
+

@@ -1,7 +1,7 @@
 
 /**
-@author Kolby Lalonde James Platt Carlos Morrea Jacob Adeyemo
-@version 1.6 April, 15, 2022
+@author Kolby Lalonde, James Platt, Carlos Morera Pinilla, Jacob Adeyemo
+@version 1.6.1 April, 15, 2022
 @since 1.0 March, 25, 2022
 **/
 

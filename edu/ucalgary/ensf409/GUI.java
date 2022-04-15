@@ -43,6 +43,12 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
     grabs the tables, then creates our AvailableFood, and ClientNeeds classes.
     Then initializes the gui.
     */
+    /*
+    This is where the program will be ran from. To run the program, first compile this file using
+    the javac command and include the mysql-connector-8.0.23.jar file as part of the path.
+    this file should be stored in a library forlder within the working directory. Then to run the program
+    run the GUI class using the same .jar file.
+    */
     public static void main(String args[]){
         //connecting to the dataBase
         data = new DataStorage("jdbc:mysql://localhost/FOOD_INVENTORY");

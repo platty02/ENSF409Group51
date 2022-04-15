@@ -1,3 +1,8 @@
+/**
+author: James Platt
+version: 1.1, April 15th
+since: 1.0, April 13th
+*/
 package edu.ucalgary.ensf409;
 
 import org.junit.Test;
@@ -6,6 +11,11 @@ import static org.junit.Assert.*;
 import java.util.*;
 
 public class AvailibleFoodandItemTest {
+
+    /*
+    Test to see if AvailibleFood's constructor properly intializes the variable when given valid input,
+    aswell as see if it properly creates a arrayList of items with the info given.
+    */
     @Test
     public void testAvailibleFoodConstructorValidInput(){
         //create valid dataTable to test with.
@@ -29,6 +39,10 @@ public class AvailibleFoodandItemTest {
         assertEquals("The arrayList was not properly intialized", "banana", testList.get(0).getName());
     }
 
+    /*
+    test to see if AvailibleFood's constructor throws a IllegalArgumentException when given invalid input in the
+    constructor. The constructor should not accept negative calorie values.
+    */
     @Test
     public void testAvailibleFoodConstructorInvalidCalories(){
         //create valid dataTable to test with.
@@ -52,6 +66,11 @@ public class AvailibleFoodandItemTest {
         //test to see if AvailibleFoods threw an invalid input exception
         assertEquals("AvailibleFoods constructor did not throw an exception when given a negative value for grain calories", exceptionThrown, true);
     }
+
+    /*
+    test to see if AvailibleFood's constructor throws a IllegalArgumentException when given a invalid name in the constructor.
+    The constructor should not accept a null value for name.
+    */
     @Test
     public void testAvailibleFoodConstructorInvalidName(){
         //create valid dataTable to test with.
@@ -76,6 +95,9 @@ public class AvailibleFoodandItemTest {
         assertEquals("AvailibleFoods constructor did not throw an exception when given a null value for name.", exceptionThrown, true);
     }
 
+    /*
+    Test to see if a valid Item can be added to the AvailibleFood object, and then removed using the itemID.
+    */
     @Test
     public void testAvailibleFoodAddItemValidInput(){
         //create valid dataTable to test with.
@@ -103,9 +125,12 @@ public class AvailibleFoodandItemTest {
         //test if the objects have the same string id.
         boolean same = actualItem.getID().equals(expectedItem.getID());
 
-        assertEquals("AvailibleFood did not remove and return the item with ID 1.", true, same );
+        assertEquals("AvailibleFood did not properly add then remove the item with ID 1", true, same );
     }
 
+    /*
+    Test to see if AvailibleFoods will add a item, even if the item is not valid. should throw a IllegalArgumentException.
+    */
     @Test 
     public void testAvailibileFoodAddItemInvalidInput(){
         //create valid dataTable to test with.
@@ -136,7 +161,9 @@ public class AvailibleFoodandItemTest {
         //should throw illegal argument exception when given a null item to add.
         assertEquals("AvailabileFood.addItem did not throw an exception when given a null item.", exceptionThrown, true);
     }
-
+    /*
+    Test to see if AvailibleFood will remove the correct object using the .remove method, when given a vlaid ID.
+    */
     @Test 
     public void testAvailibleFoodRemoveValidInput(){
         //create valid dataTable to test with.
@@ -163,6 +190,10 @@ public class AvailibleFoodandItemTest {
         assertEquals("AvailibleFood.remove() did not remove the item with itemID 1.", true, same);
     }
 
+    /*
+    test to see how AvailibleFood reacts when trying to remove a Item with a ID that is not stored in the object.
+    Should throw a IllegalArgumentException.
+    */
     @Test 
     public void testAvailibleFoodRemoveInvalidInput(){
         //create valid dataTable to test with.
@@ -192,7 +223,9 @@ public class AvailibleFoodandItemTest {
         }
         assertEquals("AvailibleFood.remove did not throw an error when given a itemID that dosen't match any item in AvailibleFood.", exceptionThrown, true);
     }
-
+    /*
+    test to see if AvailibleFood properly returns a copy of its Arraylist of Items.
+    */
     @Test 
     public void testAvailibleFoodReturnList(){
          //create valid dataTable to test with.
@@ -215,9 +248,11 @@ public class AvailibleFoodandItemTest {
          //temp item equal to the first item in the array. Should have id of 1.
          Item temp = testList.get(0);
 
-         assertEquals("AvailibleFood.retrunList did not retunr a list identical to what is stored in AvailibleFood", temp.getID(), "1");
+         assertEquals("AvailibleFood.retrunList did not return a list identical to what is stored in AvailibleFood", temp.getID(), "1");
     }
-
+    /*
+    Test to make sure that Item's constructor properly sets all member variables when constructed using valid data.
+    */
     @Test 
     public void testItemConstructorValidInput(){
         //expected values used to test constructor.
@@ -250,7 +285,10 @@ public class AvailibleFoodandItemTest {
         assertEquals("Item.getName did not return the correct value, which should have been banna", expectedName, acutalName);
         assertEquals("Item.getID did not return the correct value, which should have been 1", expectedID, actualID);
     }
-
+    /*
+    Test to see if Item throws a IllegalArgumentException when given a negative value for one of the calories, and if it throws a 
+    exception when given null for the name of the item. IllegalArgumentExceptions should be thrown in these cases.
+    */
     @Test 
     public void testItemConstructorInvalidInput(){
         //expected values used to test constructor.
@@ -282,6 +320,9 @@ public class AvailibleFoodandItemTest {
         assertEquals("Item constructor did not Throw an exception when given a null String for name", exceptionThrownSTRING, true);
     }
 
+    /*
+    Test to see that Item's getters return the correct values for a Item intialized good data.
+    */
     @Test 
     public void testItemGettersValidInput(){
         //expected values used to test constructor.

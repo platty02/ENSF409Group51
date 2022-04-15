@@ -888,7 +888,10 @@ public class ProjectTests {
 	
     /// KOLBY's Tests 
 
- @Test
+    /*
+    Test to see if hamper class constructor is work as expected with valid input
+    */
+    @Test
 	public void testHamperConstructorValidInput() throws Exception {
 
         // Creating an example Client Daily Needs Table
@@ -921,7 +924,10 @@ public class ProjectTests {
         assertEquals("The Hamper did not return correct number of Under 8 Child", 0, myHamper.getNumOfClientsAt(3));
 
 	}
-    
+
+    /*
+    Test for hamper class method calculateOptimal Hamper returns correct combination of items with easy example data
+    */
     @Test
 	public void testHamperMethodCalculateOptimalHamperValidInputNoDecimals() throws Exception {
 
@@ -963,6 +969,9 @@ public class ProjectTests {
 
     }
 
+    /*
+    Test for hamper class method calculateOptimal Hamper returns correct combination of items with hard example data
+    */
     @Test
 	public void testHamperMethodCalculateOptimalHamperValidInputWithDecimals() throws Exception {
 
@@ -1007,6 +1016,10 @@ public class ProjectTests {
 
     }
 
+
+    /*
+    Test for hamper class method calculateOptimal Hamper returns correct shortages when give insuffiecent food totals
+    */
     @Test
 	public void testHamperMethodCalculateOptimalHamperWithInsignificantFood() throws Exception {
 
@@ -1051,6 +1064,10 @@ public class ProjectTests {
     }
 	
     //DataStorage Tests
+
+    /*
+    Testing Data storage constructor has no issues
+    */
     @Test
     public void testDataStorageConstructorValidInput() throws Exception {
 
@@ -1074,6 +1091,9 @@ public class ProjectTests {
 
     }
 
+    /*
+    Testing Data storage getters and setters work as expected
+    */
     @Test
     public void testDataStorageSettersGettersValidInput() throws Exception {
 

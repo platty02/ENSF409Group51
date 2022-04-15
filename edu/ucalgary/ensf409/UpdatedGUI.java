@@ -1,5 +1,5 @@
 /**
-@author Carlos Morera Pinilla 
+@author Kolby Lalonde James Platt Carlos Morrea Jacob Adeyemo
 UCID: 30113818
 @version 1.1 April, 5, 2022
 @since 1.0 April, 5, 2022

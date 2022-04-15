@@ -1,6 +1,6 @@
 /**
-author Kolby Lalonde James Platt Carlos Morrea Jacob Adeyemo
-version: 1.3
+author Kolby Lalonde, James Platt, Carlos Morera Pinilla, Jacob Adeyemo
+version: 1.4
 since: 1.0
 */
 
@@ -15,7 +15,8 @@ public class ClientDailyNeeds
 	private final int OTHER;
 	private final int CALORIES;
 	
-	//Constructor:
+	//Constructor: Takes in a number of different calorie values as arguments, and creates a profile for that client type,
+	//storing the calories associated with the client type
 	public ClientDailyNeeds(int grain, int fruitVeg, int protein, int other, int calories) throws IllegalArgumentException
 	{
 		if(grain < 0 || fruitVeg < 0 || protein < 0 || other < 0 || calories < 0)
@@ -28,7 +29,7 @@ public class ClientDailyNeeds
 		this.OTHER = other;
 		this.CALORIES = calories;
 	}
-//Getters, they are all final fields.
+	//Getters, they are all final fields.
 	public int getWholeGrains()
 	{
 		return this.WHOLEGRAINS;

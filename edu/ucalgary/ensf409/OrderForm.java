@@ -1,6 +1,6 @@
 /**
-@author Kolby Lalonde James Platt Carlos Morrea Jacob Adeyemo
-version: 1.5
+@author Kolby Lalonde, James Platt, Carlos Morera Pinilla, Jacob Adeyemo
+version: 1.5.1
 since: 1.0
 */
 

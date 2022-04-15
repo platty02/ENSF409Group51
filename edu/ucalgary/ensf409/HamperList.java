@@ -1,6 +1,6 @@
 /**
 author: Carlos Morera Pinilla and James Platt
-version: 1.6
+version: 1.7
 since: 1.0
 */
 package edu.ucalgary.ensf409;
@@ -21,7 +21,6 @@ public class HamperList
 	public HamperList()
 	{
 		this.hamperArray = new ArrayList<Hamper>();
-		this.numberOfHampers = 0;
 	}
 	
 	//Retrieves the Hamper ArrayList and returns it.

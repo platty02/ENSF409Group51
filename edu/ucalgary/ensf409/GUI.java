@@ -1,7 +1,7 @@
 /**
-@author JamesPlatt 
+@author Kolby Lalonde, James Platt, Carlos Morera Pinilla, Jacob Adeyemo
 UCID: 30130627
-@version 1.9 April, 15, 2022
+@version 1.9.1 April, 15, 2022
 @since 1.0 April, 5, 2022
 **/
 package edu.ucalgary.ensf409;

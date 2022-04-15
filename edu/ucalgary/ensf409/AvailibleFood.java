@@ -1,7 +1,7 @@
 //ENSF409 FINAL PROJECT GROUP 51
-//Author: Kolby Lalonde James Platt Carlos Morrea Jacob Adeyemo
+//author Kolby Lalonde, James Platt, Carlos Morera Pinilla, Jacob Adeyemo
 //AvailableFood.java
-//version: 1.4
+//version: 1.4.1
 //from: 1.0
 package edu.ucalgary.ensf409;
 import java.util.*;

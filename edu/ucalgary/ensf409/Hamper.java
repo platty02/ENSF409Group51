@@ -1,8 +1,7 @@
 
 /**
-@author Kolby Lalonde 
-UCID: 30115568
-@version 1.5.1 April, 12, 2022
+@author Kolby Lalonde James Platt Carlos Morrea Jacob Adeyemo
+@version 1.6 April, 15, 2022
 @since 1.0 March, 25, 2022
 **/
 

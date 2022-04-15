@@ -19,7 +19,9 @@ import java.lang.Math;
 order. It will take the different client types data and use it along with the number of each client
 that the user has declared in order to get the totals for each category of calories. It then has methods
 that are able to calculate the optimal hamper combination through an avalible foods argument. This
-will allow other classes to return and use the optimal hamper combination as required.
+will allow other classes to return and use the optimal hamper combination as required. An important thing
+to note is that the calculateOptimalHamper may experinces much slower speeds the more items it must sort
+in the database. It is recommended to not try more than a 25 items database with this class.
 */
 
 public class Hamper{

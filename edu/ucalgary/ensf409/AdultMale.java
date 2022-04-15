@@ -1,6 +1,6 @@
 /**
-author Kolby Lalonde James Platt Carlos Morrea Jacob Adeyemo
-version: 1.2
+@author Kolby Lalonde, James Platt, Carlos Morera Pinilla, Jacob Adeyemo
+version: 1.2.1
 since: 1.0
 */
 package edu.ucalgary.ensf409;

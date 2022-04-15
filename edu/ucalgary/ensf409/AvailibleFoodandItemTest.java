@@ -1,5 +1,5 @@
 /**
-author: James Platt
+author Kolby Lalonde James Platt Carlos Morrea Jacob Adeyemo
 version: 1.1, April 15th
 since: 1.0, April 13th
 */

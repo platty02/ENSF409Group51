@@ -4,6 +4,10 @@
 @since 1.0 March, 13, 2022
 **/
 
+/*
+NOTE: Invalid input is handled through the GUI, and as such is not explicitly tested in this file.
+*/
+
 package edu.ucalgary.ensf409;
 import org.junit.Test;
 import org.junit.Assert;

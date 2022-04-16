@@ -1,7 +1,7 @@
 //ENSF409 FINAL PROJECT GROUP 51
 //author Kolby Lalonde, James Platt, Carlos Morera Pinilla, Jacob Adeyemo
 //Item.java
-//version: 1.2.1
+//version: 1.3
 //from: 1.0 
 
 package edu.ucalgary.ensf409;
@@ -63,7 +63,7 @@ public class Item {
     }
     
     //otherContent getter
-    public int getOther(){
+    public int getOtherContent(){
         return this.other;
     }
 
